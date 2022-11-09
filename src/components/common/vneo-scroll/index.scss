@@ -1,0 +1,50 @@
+@import '@/assets/styles/common/var.scss';
+@import '@/assets/styles/mixins/mixins.scss';
+
+@include b(scroll) {
+  height: calc(100vh - 102px);
+  background: $white-1-color;
+
+  @include e(content) {
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  @include e(lower) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    line-height: 0;
+    color: $gray-darker-color;
+    font-size: $text-size-medium;
+
+    @include m(loading) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 0;
+
+      .nut-icon {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  @include e(empty) {
+    overflow: hidden;
+
+    @include m(img) {
+      display: block;
+      width: 315px;
+      height: 315px;
+      margin: 30px auto 10px;
+    }
+
+    @include m(tips) {
+      text-align: center;
+      color: $gray-darker-color;
+      font-size: $text-size-medium;
+    }
+  }
+}

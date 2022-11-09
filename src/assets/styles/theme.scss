@@ -1,0 +1,15 @@
+@import './common/var.scss';
+
+// Base
+$primary-color: $base-color;
+$primary-color-end: $base-color;
+
+// Button
+$button-border-radius: 5px;
+$button-primary-border-color: $foil-base-color;
+$button-primary-background-color: $foil-base-color;
+
+// Tabs
+$tabs-titles-item-active-color: $base-color;
+$tabs-horizontal-tab-line-color: $foil-base-color;
+$tabs-horizontal-titles-item-active-line-width: 60px;

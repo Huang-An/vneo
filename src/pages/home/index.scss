@@ -1,0 +1,23 @@
+@import '@/assets/styles/common/var.scss';
+@import '@/assets/styles/mixins/mixins.scss';
+
+@include b(home) {
+  position: relative;
+
+  @include e(publish) {
+    position: absolute;
+    top: 23px;
+    right: 15px;
+    line-height: 0;
+    transform: translateY(-50%);
+    font-size: $text-size-small;
+  }
+
+  @include e(tabs) {
+    background: $white-color;
+
+    .nut-tabs__titles {
+      padding: 0 25%;
+    }
+  }
+}

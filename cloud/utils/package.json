@@ -1,0 +1,11 @@
+{
+  "name": "@vneo/cloud-utils",
+  "license": "ISC",
+  "version": "1.0.0",
+  "author": "Huang-An",
+  "description": "vneo cloud utils",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

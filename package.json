@@ -1,0 +1,86 @@
+{
+  "name": "vneo",
+  "license": "ISC",
+  "version": "1.0.0",
+  "author": "Huang-An",
+  "description": "vneo",
+  "scripts": {
+    "commit": "git-cz",
+    "preinstall": "npx only-allow pnpm",
+    "build:weapp": "taro build --type weapp",
+    "serve:weapp": "npm run build:weapp -- --watch",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged",
+    "commit-msg": "node scripts/verifyCommit.js"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "lint-staged": {
+    "*.{js,vue}": [
+      "eslint",
+      "prettier --write",
+      "git add"
+    ],
+    "*.ts?(x)": [
+      "eslint",
+      "prettier --parser=typescript --write",
+      "git add"
+    ]
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.19.0",
+    "@const-an/helper-core": "^0.0.12",
+    "@nutui/nutui-taro": "^3.2.3",
+    "@tarojs/components": "^3.5.5",
+    "@tarojs/helper": "^3.5.5",
+    "@tarojs/plugin-framework-vue3": "^3.5.5",
+    "@tarojs/plugin-html": "^3.5.5",
+    "@tarojs/plugin-platform-weapp": "^3.5.5",
+    "@tarojs/router": "^3.5.5",
+    "@tarojs/runtime": "^3.5.5",
+    "@tarojs/shared": "^3.5.5",
+    "@tarojs/taro": "^3.5.5",
+    "@tarojs/taro-h5": "^3.5.5",
+    "dayjs": "^1.11.5",
+    "lodash": "^4.17.21",
+    "pinia": "^2.0.22",
+    "vue": "^3.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.19.1",
+    "@tarojs/cli": "^3.5.5",
+    "@tarojs/webpack5-runner": "^3.5.5",
+    "@types/webpack-env": "^1.18.0",
+    "@typescript-eslint/eslint-plugin": "^5.37.0",
+    "@typescript-eslint/parser": "^5.37.0",
+    "@vue/babel-plugin-jsx": "^1.1.1",
+    "@vue/compiler-sfc": "^3.2.39",
+    "babel-plugin-import": "^1.13.5",
+    "babel-preset-taro": "^3.5.5",
+    "chalk": "^5.0.1",
+    "commitizen": "^4.2.5",
+    "conventional-changelog-cli": "^2.2.2",
+    "css-loader": "^6.7.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.23.1",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-config-taro": "^3.5.5",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.5",
+    "eslint-plugin-promise": "^6.0.1",
+    "eslint-plugin-vue": "^9.4.0",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
+    "style-loader": "^3.3.1",
+    "stylelint": "^14.11.0",
+    "taro-plugin-pinia": "^1.0.0",
+    "typescript": "^4.8.3",
+    "vue-loader": "^17.0.0",
+    "webpack": "^5.74.0"
+  }
+}

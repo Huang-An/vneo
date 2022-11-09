@@ -1,0 +1,38 @@
+@import '@/assets/styles/common/var.scss';
+
+// tabs
+.nut-tabs {
+  .nut-tabs__titles {
+    border-bottom: $border;
+    background: $white-color !important;
+
+    .nut-tabs__titles-item.active {
+      font-size: $title-size-regular !important;
+      font-weight: $font-weight-medium !important;
+    }
+
+    .nut-tabs__titles-item__line {
+      bottom: 0 !important;
+      height: 2px !important;
+    }
+  }
+
+  .nut-tabpane {
+    padding: 0 !important;
+  }
+}
+
+// tabbar
+.nut-tabbar {
+  border-top: $border !important;
+}
+
+// input
+.nut-input {
+  padding: 10px 15px;
+}
+
+// textarea
+.nut-textarea {
+  padding: 10px 15px;
+}

@@ -1,0 +1,44 @@
+@import '@/assets/styles/common/var.scss';
+@import '@/assets/styles/mixins/mixins.scss';
+
+@include b(uploader) {
+  padding: 10px 15px;
+
+  @include e(content) {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  @include e(item) {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border: $border;
+
+    @include m(img) {
+      width: 100%;
+      height: 100%;
+    }
+
+    @include m(contorl) {
+      margin-right: 0;
+      margin-bottom: 0;
+      background: $white-3-color;
+      color: $gray-darker-color;
+    }
+
+    @include m(close) {
+      position: absolute;
+      font-size: 16px;
+      top: -8px;
+      right: -8px;
+      color: $gray-darker-color;
+    }
+  }
+}
