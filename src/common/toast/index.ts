@@ -16,6 +16,13 @@ export const fail = (message = '错误') => {
   })
 }
 
+export const message = (message: string) => {
+  Taro.showToast({
+    title: message,
+    icon: 'none'
+  })
+}
+
 export function showLoading(isLoading: boolean, message = '') {
   if (isLoading) {
     Taro.showLoading({

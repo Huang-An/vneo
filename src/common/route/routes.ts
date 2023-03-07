@@ -48,11 +48,6 @@ export const routes = [
     title: '详情',
     name: 'article-detail',
     path: 'pages/article-detail/index'
-  },
-  {
-    title: '图片预览',
-    name: 'image-preview',
-    path: 'pages/image-preview/index'
   }
 ]
 

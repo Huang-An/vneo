@@ -14,4 +14,4 @@ export const list = async (params: ArticlesList.Params) =>
 
 // 点赞收藏
 export const likeOrCollect = async (params: ArticlesLikeOrCollect.Params) =>
-  await callFunction<ArticlesLikeOrCollect.Response>(`${BASE_URL}/add`, params)
+  await callFunction<ArticlesLikeOrCollect.Response>(`${BASE_URL}/likes`, params)

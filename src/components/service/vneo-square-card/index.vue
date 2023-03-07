@@ -27,7 +27,7 @@
           v-for="(item, index) in imageList"
           :key="index"
           :class="`vneo-image-wrapper vneo-image-wrapper-${imageList.length}`"
-          @click.stop="openImagePreview(index)"
+          @click.stop="openImagePreview(item)"
         >
           <div class="vneo-image-wrapper__body">
             <image :src="item" mode="aspectFill" class="vneo-image-wrapper__body--content" />
@@ -50,7 +50,8 @@
 
       <!-- 评论 -->
       <div class="vneo-square-card__footer--item">
-        <nut-icon name="message" size="15" />
+        <nut-icon name="message" />
+
         <span class="text">{{ currentData.commentCount }}</span>
       </div>
 
@@ -67,6 +68,7 @@
 import './index.scss'
 
 import { reactive, computed } from 'vue'
+import { previewImage } from '@tarojs/taro'
 import { likeOrCollect } from '@/api/articles'
 import { navigateToByName } from '@/common/route'
 
@@ -82,17 +84,15 @@ const props = defineProps({
 
 const currentData = reactive(props.data)
 
-const imageList = computed(() => props.data.imageList.slice(0, 3) || [])
+const imageList = computed(() => (Array.isArray(currentData.imageList) ? currentData.imageList.slice(0, 3) : []))
 
 // 打开图片预览
-const openImagePreview = (index: number) => {
-  navigateToByName('image-preview', {
-    success(res) {
-      res.eventChannel.emit('update.image.preview', {
-        index: index + 1,
-        imageList: imageList.value.map(item => ({ src: item }))
-      })
-    }
+const openImagePreview = async (current: string) => {
+  if (!current) return
+
+  await previewImage({
+    current,
+    urls: currentData.imageList || []
   })
 }
 
