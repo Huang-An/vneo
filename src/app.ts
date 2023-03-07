@@ -6,7 +6,10 @@ import './assets/styles/index.scss'
 
 const App = createApp({
   onLaunch() {
-    cloud.init({ traceUser: true })
+    cloud.init({
+      env: process.env.CLOUD_ENV,
+      traceUser: true
+    })
   }
 })
 

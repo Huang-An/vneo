@@ -1,27 +1,49 @@
-// 添加文章请求参数
-export type AddParams = {
-  type: number
-  title: string
-  content: string
-  imageList: string[]
+// 新增
+export namespace ArticlesAdd {
+  type Params = {
+    type: number
+    title: string
+    content: string
+    imageList: string[]
+  }
+
+  type Response = boolean
 }
 
-// 文章列表请求参数
-export type ListParams = BaseListParams<{}>
+// 列表
+export namespace ArticlesList {
+  type ListItem = BaseListItem & {
+    avatar: string
+    username: string
+    title: string
+    content: string
+    // 是否点赞
+    isLike: boolean
+    // 是否收藏
+    isCollect: boolean
+    // 点赞数量
+    likeCount: number
+    // 收藏数量
+    collectCount: number
+    // 回复数量
+    commentCount: number
+    imageList: string[]
+  }
 
-// 文章列表 每一项数据
-export type ListItem = BaseListItem & {
-  avatar: string
-  username: string
-  title: string
-  content: string
-  isLike: boolean
-  isCollect: boolean
-  likeCount: number
-  collectCount: number
-  commentCount: number
-  imageList: string[]
+  type Params = BaseListParams<{}>
+
+  type Response = BaseListResponse<ListItem>
 }
 
-// 文章列表响应
-export type ListResponse = BaseListResponse<ListItem>
+// 点赞收藏
+export namespace ArticlesLikeOrCollect {
+  type Params = {
+    id: string
+    // 1 like 、2 collect
+    type: 1 | 2
+    // 0 失效、1 生效
+    status: number
+  }
+
+  type Response = boolean
+}

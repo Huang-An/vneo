@@ -1,5 +1,5 @@
 <template>
-  <div class="vneo-publish">
+  <div class="vneo-article-publish">
     <vneo-select v-model="form.type" :border="false" :columns="columns" />
 
     <nut-input v-model="form.title" :border="false" max-length="25" :placeholder="columnConfig?.titlePlaceholder" />
@@ -8,7 +8,7 @@
 
     <vneo-uploader v-model="form.imageList" ref="uploaderRef" />
 
-    <div class="vneo-publish__submit">
+    <div class="vneo-article-publish__submit">
       <nut-button block type="primary" @click="submit">发 布</nut-button>
     </div>
   </div>
@@ -23,13 +23,13 @@ import { fail, success } from '@/common/toast'
 import { PUBLISH_CHANNEL_TYPES } from '@/constant'
 import { Input as NutInput, TextArea as NutTextArea, Button as NutButton } from '@nutui/nutui-taro'
 
-import type { AddParams } from '@/api/articles/type'
+import type { ArticlesAdd } from '@/api/articles/type'
 
 const columns = reactive(PUBLISH_CHANNEL_TYPES)
 
 const columnConfig = computed(() => columns.find(column => column.value === form.type))
 
-const form = reactive<AddParams>({
+const form = reactive<ArticlesAdd.Params>({
   type: 1,
   title: '',
   content: '',

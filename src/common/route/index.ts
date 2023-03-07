@@ -38,8 +38,24 @@ export const switchTabByName = (name: string) => {
   route && switchTab({ url: `/${route.path}` })
 }
 
-export const navigateToByName = (name: string, option?: Omit<Taro.navigateTo.Option, 'url'>) => {
+export const navigateToByName = (
+  name: string,
+  option?: Omit<Taro.navigateTo.Option, 'url'> & { params?: Record<string, any> }
+) => {
   const route = getRouteByName(name)
 
-  route && navigateTo({ url: `/${route.path}`, ...option })
+  if (!route) return
+
+  // 处理参数
+  const params = option && option.params ? option.params : {}
+
+  let param = Object.keys(params)
+    .map(key => `${key}=${params[key]}`)
+    .join('&')
+
+  // 处理路径
+  let url = `/${route?.path}`
+  url = param ? `${url}?${param}` : url
+
+  navigateTo({ url, ...option })
 }

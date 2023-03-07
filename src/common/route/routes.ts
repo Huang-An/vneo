@@ -44,11 +44,11 @@ export const routes = [
     name: 'article-publish',
     path: 'pages/article-publish/index'
   },
-  // {
-  //   title: '详情',
-  //   name: 'article-detail',
-  //   path: 'pages/article-detail/index'
-  // },
+  {
+    title: '详情',
+    name: 'article-detail',
+    path: 'pages/article-detail/index'
+  },
   {
     title: '图片预览',
     name: 'image-preview',

@@ -1,3 +1,3 @@
-import type { ListItem } from '@/api/articles/type'
+import type { ArticlesList } from '@/api/articles/type'
 
-export type Data = ListItem
+export type Data = ArticlesList.ListItem
