@@ -14,7 +14,7 @@
     </div>
 
     <!-- body -->
-    <div class="vneo-square-card__body" @click="openArticleDetail">
+    <div class="vneo-square-card__body" @click="openArticlesDetail">
       <!-- 标题 -->
       <div class="vneo-square-card__body--title">{{ currentData.title }}</div>
 
@@ -40,25 +40,22 @@
     <div class="vneo-square-card__footer">
       <!-- 收藏 -->
       <div class="vneo-square-card__footer--item" @click.stop="collectHandler">
-        <nut-icon
-          :class="currentData.isCollect ? 'is-active' : ''"
-          :name="currentData.isCollect ? 'star-fill-n' : 'star-n'"
-        />
+        <nut-icon :class="isCollect ? 'is-active' : ''" :name="isCollect ? 'star-fill-n' : 'star-n'" />
 
-        <span class="text">{{ currentData.collectCount }}</span>
+        <span class="text">{{ collectCount || '' }}</span>
       </div>
 
       <!-- 评论 -->
       <div class="vneo-square-card__footer--item">
-        <nut-icon name="message" />
+        <nut-icon name="message" size="13" />
 
-        <span class="text">{{ currentData.commentCount }}</span>
+        <span class="text"> </span>
       </div>
 
       <!-- 点赞 -->
       <div class="vneo-square-card__footer--item" @click.stop="likeHandler">
-        <nut-icon :class="currentData.isLike ? 'is-active' : ''" :name="currentData.isLike ? 'heart-fill' : 'heart1'" />
-        <span>{{ currentData.likeCount }}</span>
+        <nut-icon :class="isLike ? 'is-active' : ''" :name="isLike ? 'heart-fill' : 'heart1'" />
+        <span class="text">{{ likeCount || '' }}</span>
       </div>
     </div>
   </div>
@@ -67,13 +64,17 @@
 <script setup lang="ts">
 import './index.scss'
 
-import { reactive, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { previewImage } from '@tarojs/taro'
 import { likeOrCollect } from '@/api/articles'
 import { navigateToByName } from '@/common/route'
+import { useUserStore } from '@/store/modules/user'
 
-import type { Data } from './type'
 import type { PropType } from 'vue'
+
+import type { Data, ArticlesLikeOrCollectParams } from './type'
+
+const store = useUserStore()
 
 const props = defineProps({
   data: {
@@ -82,9 +83,51 @@ const props = defineProps({
   }
 })
 
-const currentData = reactive(props.data)
+let currentData = ref(props.data)
 
-const imageList = computed(() => (Array.isArray(currentData.imageList) ? currentData.imageList.slice(0, 3) : []))
+watch(
+  () => props.data,
+  () => {
+    currentData.value = props.data
+  }
+)
+
+// 图片列表
+const imageList = computed(() =>
+  Array.isArray(currentData.value.imageList) ? currentData.value.imageList.slice(0, 3) : []
+)
+
+// 是否收藏
+const isCollect = computed(() => {
+  const { likeOrCollectList } = currentData.value
+
+  return !!likeOrCollectList.filter(
+    item => item.type === 1 && item.status === 1 && item.createUserById === store.getUserId
+  ).length
+})
+
+// 收藏数量
+const collectCount = computed(() => {
+  const { likeOrCollectList } = currentData.value
+
+  return likeOrCollectList.filter(item => item.type === 1 && item.status === 1).length
+})
+
+// 是否点赞
+const isLike = computed(() => {
+  const { likeOrCollectList } = currentData.value
+
+  return !!likeOrCollectList.filter(
+    item => item.type === 2 && item.status === 1 && item.createUserById === store.getUserId
+  ).length
+})
+
+// 点赞数量
+const likeCount = computed(() => {
+  const { likeOrCollectList } = currentData.value
+
+  return likeOrCollectList.filter(item => item.type === 2 && item.status === 1).length
+})
 
 // 打开图片预览
 const openImagePreview = async (current: string) => {
@@ -92,40 +135,54 @@ const openImagePreview = async (current: string) => {
 
   await previewImage({
     current,
-    urls: currentData.imageList || []
+    urls: currentData.value.imageList || []
   })
-}
-
-// 点赞
-const likeHandler = async () => {
-  const status = !currentData.isLike
-
-  await likeOrCollect({
-    type: 1,
-    id: currentData.id,
-    status: Number(status)
-  })
-
-  currentData.isLike = status
 }
 
 // 收藏
 const collectHandler = async () => {
-  const status = !currentData.isCollect
+  const params = {
+    type: 1 as const,
+    status: Number(!isCollect.value),
+    articlesId: currentData.value._id
+  }
 
-  await likeOrCollect({
-    type: 2,
-    id: currentData.id,
-    status: Number(status)
-  })
+  await likeOrCollect(params)
+  updateLikeOrCollectList(params)
+}
 
-  currentData.isCollect = status
+// 点赞
+const likeHandler = async () => {
+  const params = {
+    type: 2 as const,
+    status: Number(!isLike.value),
+    articlesId: currentData.value._id
+  }
+
+  await likeOrCollect(params)
+  updateLikeOrCollectList(params)
+}
+
+// 更新 likeOrCollectList
+const updateLikeOrCollectList = (params: ArticlesLikeOrCollectParams) => {
+  const index = currentData.value.likeOrCollectList.findIndex(
+    item => item.type === params.type && item.createUserById === store.getUserId
+  )
+
+  // 找到 更新
+  if (index !== -1) {
+    currentData.value.likeOrCollectList[index] = { ...currentData.value.likeOrCollectList[index], ...params }
+    return
+  }
+
+  // 找不到 push
+  currentData.value.likeOrCollectList.push({ ...params, createUserById: store.getUserId } as any)
 }
 
 // 打开详情页
-const openArticleDetail = () => {
-  navigateToByName('article-detail', {
-    params: { id: currentData.id }
+const openArticlesDetail = () => {
+  navigateToByName('articles-detail', {
+    params: { id: currentData.value._id }
   })
 }
 </script>

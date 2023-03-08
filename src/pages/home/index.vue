@@ -27,6 +27,6 @@ const state = ref('0')
 
 // 前往文章发布
 const goPublish = () => {
-  navigateToByName('article-publish')
+  navigateToByName('articles-publish')
 }
 </script>

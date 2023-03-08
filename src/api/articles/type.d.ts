@@ -17,17 +17,8 @@ export namespace ArticlesList {
     username: string
     title: string
     content: string
-    // 是否点赞
-    isLike: boolean
-    // 是否收藏
-    isCollect: boolean
-    // 点赞数量
-    likeCount: number
-    // 收藏数量
-    collectCount: number
-    // 回复数量
-    commentCount: number
     imageList: string[]
+    likeOrCollectList: Array<BaseListItem & ArticlesLikeOrCollect.Params>
   }
 
   type Params = BaseListParams<{
@@ -41,8 +32,9 @@ export namespace ArticlesList {
 // 点赞收藏
 export namespace ArticlesLikeOrCollect {
   type Params = {
-    id: string
-    // 1 like 、2 collect
+    // 文章 id
+    articlesId: string
+    // 1 collect 、2 like
     type: 1 | 2
     // 0 失效、1 生效
     status: number

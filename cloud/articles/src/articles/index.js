@@ -32,6 +32,12 @@ exports.list = async (params, event, context) => {
       localField: 'createUserById',
       as: 'userList'
     })
+    .lookup({
+      from: 'articles-like-collect',
+      foreignField: 'articlesId',
+      localField: '_id',
+      as: 'likeOrCollectList'
+    })
     .replaceRoot({
       newRoot: $.aggregate.mergeObjects([$.aggregate.arrayElemAt(['$userList', 0]), '$$ROOT'])
     })
@@ -60,11 +66,22 @@ exports.add = async params => {
   return createResponeBySuccess(true)
 }
 
-// 点赞
-exports.likes = async params => {
-  const db = new Database(cloud.database(), 'article-likes')
+// 点赞收藏
+exports.likeOrCollect = async params => {
+  const { OPENID } = cloud.getWXContext()
 
-  await db.add(params)
+  const search = { articlesId: params.articlesId, createUserById: OPENID, type: params.type }
+
+  const db = new Database(cloud.database(), 'articles-like-collect')
+
+  const total = await db.getCount(search)
+
+  // 如果有数据 就更新
+  if (total) {
+    await db.update(search)(params)
+  } else {
+    await db.add(params)
+  }
 
   return createResponeBySuccess(true)
 }

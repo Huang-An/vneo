@@ -1,5 +1,5 @@
 <template>
-  <div class="vneo-article-publish">
+  <div class="vneo-articles-publish">
     <vneo-select v-model="form.type" :border="false" :columns="columns" />
 
     <nut-input v-model="form.title" :border="false" max-length="25" :placeholder="columnConfig?.titlePlaceholder" />
@@ -8,7 +8,7 @@
 
     <vneo-uploader v-model="form.imageList" ref="uploaderRef" />
 
-    <div class="vneo-article-publish__submit">
+    <div class="vneo-articles-publish__submit">
       <nut-button block type="primary" @click="submit">发 布</nut-button>
     </div>
   </div>

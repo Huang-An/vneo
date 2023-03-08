@@ -22,7 +22,7 @@ type BaseListParams<S = any> = {
  * 通用 列表项
  */
 type BaseListItem = {
-  id: string
+  _id: string
 
   /**
    * 创建时间

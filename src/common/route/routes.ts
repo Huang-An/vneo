@@ -49,13 +49,13 @@ export const routes = [
   },
   {
     title: '发布',
-    name: 'article-publish',
-    path: 'pages/article-publish/index'
+    name: 'articles-publish',
+    path: 'pages/articles-publish/index'
   },
   {
     title: '详情',
-    name: 'article-detail',
-    path: 'pages/article-detail/index'
+    name: 'articles-detail',
+    path: 'pages/articles-detail/index'
   }
 ]
 
