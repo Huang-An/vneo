@@ -14,5 +14,11 @@ import { list } from '@/api/articles'
 import type { ArticlesList } from '@/api/articles/type'
 import type { PageConfig } from '@/components/common/vneo-scroll/type'
 
-const load = async (pageConfig: PageConfig) => await list({ ...pageConfig })
+const load = async (pageConfig: PageConfig) =>
+  await list({
+    ...pageConfig,
+    search: {
+      type: 1
+    }
+  })
 </script>

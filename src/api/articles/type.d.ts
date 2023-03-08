@@ -30,7 +30,10 @@ export namespace ArticlesList {
     imageList: string[]
   }
 
-  type Params = BaseListParams<{}>
+  type Params = BaseListParams<{
+    // 1 广场 2 日记
+    type: 1 | 2
+  }>
 
   type Response = BaseListResponse<ListItem>
 }

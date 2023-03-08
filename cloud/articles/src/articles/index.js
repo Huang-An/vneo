@@ -4,17 +4,28 @@ const { Database, createResponeBySuccess } = require('@vneo/cloud-utils')
 cloud.init()
 
 // 查询
-exports.list = async params => {
-  const { pageIndex, pageSize } = params
+exports.list = async (params, event, context) => {
+  const { OPENID } = cloud.getWXContext()
+  const { pageIndex, pageSize, search = {} } = params
 
+  // 构建 where 查询条件
+  if (search.type === 2) search.createUserById = OPENID
+
+  // 初始化数据库
   const db = new Database(cloud.database(), 'articles')
-  const $ = db.command().aggregate
+  const $ = db.command()
 
-  const total = await db.getCount()
+  // 查询总条数
+  const total = await db.getCount(search)
 
+  // 聚合查询
   const { errMsg, list } = await db
     .getCollection()
+    // 发起聚合查询
     .aggregate()
+    // 类似 where 过滤
+    .match(search)
+    // 左外连接
     .lookup({
       from: 'user',
       foreignField: 'userId',
@@ -22,7 +33,7 @@ exports.list = async params => {
       as: 'userList'
     })
     .replaceRoot({
-      newRoot: $.mergeObjects([$.arrayElemAt(['$userList', 0]), '$$ROOT'])
+      newRoot: $.aggregate.mergeObjects([$.aggregate.arrayElemAt(['$userList', 0]), '$$ROOT'])
     })
     .project({ userList: 0, userId: 0, userName: 0 })
     .skip((pageIndex - 1) * pageSize)

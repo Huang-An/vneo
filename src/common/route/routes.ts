@@ -9,6 +9,14 @@ export const routes = [
     }
   },
   {
+    title: '隐私协议',
+    name: 'agreement-privacy',
+    path: 'pages/agreement-privacy/index',
+    meta: {
+      isWhite: true
+    }
+  },
+  {
     title: '首页',
     name: 'home',
     path: 'pages/home/index',

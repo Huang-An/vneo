@@ -1,0 +1,21 @@
+@import '@/assets/styles/common/var.scss';
+@import '@/assets/styles/mixins/mixins.scss';
+
+@include b(agreement-privacy) {
+  padding: 15px;
+  line-height: 24px;
+  font-size: $text-size-large;
+
+  h1,
+  h2 {
+    margin: 20px 0;
+  }
+
+  @include e(content) {
+    overflow: hidden;
+
+    @include m(bold) {
+      font-weight: bold;
+    }
+  }
+}

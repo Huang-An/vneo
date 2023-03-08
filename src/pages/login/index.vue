@@ -9,7 +9,7 @@
     <div class="vneo-login__footer">
       <nut-checkbox v-model="isAgree" icon-size="12" />
       <span>我已阅读并同意</span>
-      <a>《隐私协议》</a>
+      <a @click="openAgreementPrivacy">《隐私协议》</a>
     </div>
   </div>
 </template>
@@ -21,6 +21,7 @@ import loginLogo from '@/assets/images/login-logo.png'
 
 import { ref } from 'vue'
 import { message } from '@/common/toast'
+import { navigateToByName } from '@/common/route'
 import { useUserStore } from '@/store/modules/user'
 import { Button as NutButton, Checkbox as NutCheckbox } from '@nutui/nutui-taro'
 
@@ -34,5 +35,10 @@ const login = async () => {
   }
 
   await store.login()
+}
+
+const openAgreementPrivacy = () => {
+  navigateToByName('agreement-privacy')
+  isAgree.value = true
 }
 </script>
