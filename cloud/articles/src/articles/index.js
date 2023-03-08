@@ -70,7 +70,7 @@ exports.add = async params => {
 exports.likeOrCollect = async params => {
   const { OPENID } = cloud.getWXContext()
 
-  const search = { articlesId: params.articlesId, createUserById: OPENID, type: params.type }
+  const search = { articlesId: params.articlesId, type: params.type, createUserById: OPENID }
 
   const db = new Database(cloud.database(), 'articles-like-collect')
 
