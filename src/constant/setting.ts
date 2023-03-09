@@ -7,8 +7,8 @@ export const PUBLISH_CHANNEL_TYPES = [
   },
   {
     value: 2,
-    text: '发布到日记',
+    text: '发布到日记（仅自己可见）',
     titlePlaceholder: '请输入标题，最多25个字',
-    contentPlaceholder: '今天又发生了什么有趣的事呢？开心或难过，总归是又过一了天嘞~'
+    contentPlaceholder: '今天又发生了什么有趣的事呢？开心或难过，总归是又过一天了嘞~'
   }
 ]

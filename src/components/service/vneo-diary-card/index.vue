@@ -43,7 +43,7 @@ import './index.scss'
 
 import { reactive, computed } from 'vue'
 import { previewImage } from '@tarojs/taro'
-import { navigateToByName } from '@/common/route'
+// import { navigateToByName } from '@/common/route'
 
 import type { Data } from './type'
 import type { PropType } from 'vue'
@@ -71,8 +71,8 @@ const openImagePreview = async (current: string) => {
 
 // 打开详情页
 const openArticlesDetail = () => {
-  navigateToByName('articles-detail', {
-    params: { id: currentData._id }
-  })
+  // navigateToByName('articles-detail', {
+  //   params: { id: currentData._id }
+  // })
 }
 </script>

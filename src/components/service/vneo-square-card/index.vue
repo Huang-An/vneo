@@ -45,13 +45,6 @@
         <span class="text">{{ collectCount || '' }}</span>
       </div>
 
-      <!-- 评论 -->
-      <div class="vneo-square-card__footer--item">
-        <nut-icon name="message" size="13" />
-
-        <span class="text"> </span>
-      </div>
-
       <!-- 点赞 -->
       <div class="vneo-square-card__footer--item" @click.stop="likeHandler">
         <nut-icon :class="isLike ? 'is-active' : ''" :name="isLike ? 'heart-fill' : 'heart1'" />
@@ -67,7 +60,7 @@ import './index.scss'
 import { ref, computed, watch } from 'vue'
 import { previewImage } from '@tarojs/taro'
 import { likeOrCollect } from '@/api/articles'
-import { navigateToByName } from '@/common/route'
+// import { navigateToByName } from '@/common/route'
 import { useUserStore } from '@/store/modules/user'
 
 import type { PropType } from 'vue'
@@ -181,8 +174,8 @@ const updateLikeOrCollectList = (params: ArticlesLikeOrCollectParams) => {
 
 // 打开详情页
 const openArticlesDetail = () => {
-  navigateToByName('articles-detail', {
-    params: { id: currentData.value._id }
-  })
+  // navigateToByName('articles-detail', {
+  //   params: { id: currentData.value._id }
+  // })
 }
 </script>
