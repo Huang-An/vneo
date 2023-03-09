@@ -14,7 +14,7 @@ export namespace ArticlesAdd {
 export namespace ArticlesList {
   type ListItem = BaseListItem & {
     avatar: string
-    username: string
+    userName: string
     title: string
     content: string
     imageList: string[]

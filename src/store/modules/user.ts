@@ -1,6 +1,7 @@
 import { store } from '@/store'
 import { login } from '@/api/user'
 import { defineStore } from 'pinia'
+import { useAppStoreWithOut } from './app'
 import { getUserProfile } from '@tarojs/taro'
 import { redirectToByName, switchTabByName } from '@/common/route'
 import { getMultiStorage, setMultiStorage, removeMultiStorage } from '@/common/helper'
@@ -52,6 +53,9 @@ export const useUserStore = defineStore({
       this.removeUserInfo()
 
       redirectToByName('login')
+
+      // 重置 tab
+      useAppStoreWithOut().resetTab()
     }
   }
 })

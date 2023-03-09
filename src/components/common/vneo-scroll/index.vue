@@ -1,5 +1,5 @@
 <template>
-  <div class="vneo-scroll">
+  <div class="vneo-scroll" :style="{ height }">
     <scroll-view
       :scroll-y="true"
       :refresher-enabled="true"
@@ -77,6 +77,11 @@ const props = defineProps({
   load: {
     required: true,
     type: Function as PropType<Load>
+  },
+
+  height: {
+    type: String,
+    default: 'calc(100vh - 204rpx)'
   }
 })
 

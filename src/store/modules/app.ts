@@ -24,6 +24,10 @@ export const useAppStore = defineStore({
       this.setTabActiveName(tabActiveName)
 
       switchTabByName(tabActiveName)
+    },
+
+    resetTab() {
+      this.setTabActiveName('home')
     }
   }
 })

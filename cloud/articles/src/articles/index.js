@@ -41,7 +41,7 @@ exports.list = async (params, event, context) => {
     .replaceRoot({
       newRoot: $.aggregate.mergeObjects([$.aggregate.arrayElemAt(['$userList', 0]), '$$ROOT'])
     })
-    .project({ userList: 0, userId: 0, userName: 0 })
+    .project({ userList: 0, userId: 0 })
     .skip((pageIndex - 1) * pageSize)
     .limit(pageSize)
     .end()

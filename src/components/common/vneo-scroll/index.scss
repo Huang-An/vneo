@@ -2,7 +2,6 @@
 @import '@/assets/styles/mixins/mixins.scss';
 
 @include b(scroll) {
-  height: calc(100vh - 102px);
   background: $white-1-color;
 
   @include e(content) {

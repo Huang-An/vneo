@@ -7,7 +7,7 @@
 
       <!-- 用户信息 -->
       <div class="vneo-diary-card__head--user">
-        <div class="vneo-diary-card__head--username">{{ currentData.createUserByName }}</div>
+        <div class="vneo-diary-card__head--username">{{ currentData.userName }}</div>
 
         <div class="vneo-diary-card__head--date">{{ currentData.createDate }}</div>
       </div>

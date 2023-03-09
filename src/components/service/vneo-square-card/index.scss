@@ -38,9 +38,10 @@
 
   @include e(body) {
     @include m(title) {
+      margin-bottom: 10px;
       font-size: $text-size-large;
       font-weight: $font-weight-medium;
-      margin-bottom: 10px;
+      @include text-overflow();
     }
 
     @include m(content) {

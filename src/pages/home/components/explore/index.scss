@@ -1,0 +1,44 @@
+@import '@/assets/styles/common/var.scss';
+@import '@/assets/styles/mixins/mixins.scss';
+
+@include b(explore) {
+  width: 100%;
+  height: calc(100vh - 102px);
+  padding: 0 16px 15px;
+  overflow-y: auto;
+  box-sizing: border-box;
+  background: $white-1-color;
+
+  @include e(item) {
+    position: relative;
+    width: 100%;
+    height: 120px;
+    margin-top: 15px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: $foil-base-color;
+
+    @include m(image) {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 88px;
+      width: 100%;
+      height: 100%;
+    }
+
+    @include m(text) {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      line-height: 120px;
+      padding-left: 16px;
+      box-sizing: border-box;
+      font-weight: bold;
+      color: $white-color;
+      font-size: $title-size-regular;
+    }
+  }
+}

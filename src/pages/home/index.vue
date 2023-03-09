@@ -9,7 +9,9 @@
         <square />
       </nut-tabpane>
 
-      <nut-tabpane title="探 索"> 探 索 </nut-tabpane>
+      <nut-tabpane title="探 索">
+        <explore />
+      </nut-tabpane>
     </nut-tabs>
   </div>
 </template>
@@ -18,6 +20,7 @@
 import './index.scss'
 
 import Square from './components/square/index.vue'
+import Explore from './components/explore/index.vue'
 
 import { ref } from 'vue'
 import { navigateToByName } from '@/common/route'

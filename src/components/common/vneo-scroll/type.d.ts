@@ -11,5 +11,6 @@ export type VneoScroll = VneoComponent<{
   loadingText?: string
   finishedText?: string
   emptyText?: string
+  height?: string
   load: Load
 }>
