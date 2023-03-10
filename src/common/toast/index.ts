@@ -16,10 +16,11 @@ export const fail = (message = '错误') => {
   })
 }
 
-export const message = (message: string) => {
+export const message = (message: string, duration?: number) => {
   Taro.showToast({
     title: message,
-    icon: 'none'
+    icon: 'none',
+    duration
   })
 }
 

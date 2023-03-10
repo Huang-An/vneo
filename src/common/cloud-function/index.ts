@@ -52,15 +52,11 @@ export const callFunction = async <R = any>(url: string, params: any = {}, confi
 
   showLoading(isLoading, loadingTips)
 
-  try {
-    let { errMsg, result } = await cloud.callFunction(createParams(url, params))
+  let { errMsg, result } = await cloud.callFunction(createParams(url, params))
 
-    if (errMsg !== 'cloud.callFunction:ok') {
-      result = ERROR_INFO
-    }
-
-    return callFunctionHandler<R>(result as CallFunctionResponse<R>, isErrorTips)
-  } catch {
-    return callFunctionHandler<R>(ERROR_INFO, isErrorTips)
+  if (errMsg !== 'cloud.callFunction:ok') {
+    result = ERROR_INFO
   }
+
+  return callFunctionHandler<R>(result as CallFunctionResponse<R>, isErrorTips)
 }

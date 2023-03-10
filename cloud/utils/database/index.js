@@ -36,7 +36,7 @@ exports.Database = class Database {
 
   // 单表分页列表查询
   async getByPagination(pageIndex = 1, pageSize = 10, searchs = {}) {
-    const total = await this.getCount()
+    const total = await this.getCount(searchs)
 
     const getResult = await this.collection()
       .where(searchs)

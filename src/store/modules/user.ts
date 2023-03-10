@@ -1,5 +1,6 @@
 import { store } from '@/store'
 import { defineStore } from 'pinia'
+import { message } from '@/common/toast'
 import { useAppStoreWithOut } from './app'
 import { navigateBack } from '@tarojs/taro'
 import { login, addOrUpdate } from '@/api/user'
@@ -42,6 +43,7 @@ export const useUserStore = defineStore({
       // 查不到用户信息，前去注册
       if (data.total === 0) {
         navigateToByName('personal-update')
+        message('为了您能正常使用，请先完善用户信息~', 3000)
         return
       }
 

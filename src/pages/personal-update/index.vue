@@ -33,9 +33,9 @@ import './index.scss'
 
 import { ref } from 'vue'
 import { cloud } from '@tarojs/taro'
-import { fail } from '@/common/toast'
 import { useUserStore } from '@/store/modules/user'
 import { Button as NutButton } from '@nutui/nutui-taro'
+import { fail, success, showLoading, hideLoading } from '@/common/toast'
 
 const store = useUserStore()
 
@@ -56,26 +56,36 @@ const onChooseAvatar = (e: any) => {
 }
 
 const submit = async () => {
+  // 校验昵称
   if (!userName.value) {
     fail('请填写昵称~')
     return false
   }
 
-  let _avatar = avatar.value
+  try {
+    showLoading(true)
 
-  // 上传头像
-  if (_avatar !== defaultAvatarUrl) {
-    const { fileID } = await cloud.uploadFile({
-      filePath: avatar.value,
-      cloudPath: avatar.value.split('/').pop() || ''
+    let _avatar = avatar.value
+
+    // 上传头像
+    if (_avatar !== defaultAvatarUrl) {
+      const { fileID } = await cloud.uploadFile({
+        filePath: avatar.value,
+        cloudPath: avatar.value.split('/').pop() || ''
+      })
+
+      _avatar = fileID
+    }
+
+    // 更新用户数据
+    await store.addOrUpdate({
+      avatar: _avatar,
+      userName: userName.value
     })
 
-    _avatar = fileID
+    success('保存成功')
+  } finally {
+    hideLoading()
   }
-
-  await store.addOrUpdate({
-    avatar: _avatar,
-    userName: userName.value
-  })
 }
 </script>
