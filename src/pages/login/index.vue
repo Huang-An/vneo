@@ -22,6 +22,7 @@ import loginLogo from '@/assets/images/login-logo.png'
 import { ref } from 'vue'
 import { message } from '@/common/toast'
 import { navigateToByName } from '@/common/route'
+import { useShareAppMessage } from '@tarojs/taro'
 import { useUserStore } from '@/store/modules/user'
 import { Button as NutButton, Checkbox as NutCheckbox } from '@nutui/nutui-taro'
 
@@ -43,4 +44,9 @@ const openAgreementPrivacy = () => {
 
   isAgree.value = true
 }
+
+useShareAppMessage(() => ({
+  title: '欢迎登录VNeo~',
+  imageUrl: loginLogo
+}))
 </script>

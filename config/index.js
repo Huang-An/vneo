@@ -39,7 +39,7 @@ const config = {
       url: {
         enable: true,
         config: {
-          limit: 1024 * 5 * 10
+          limit: 1024 * 10
         }
       },
       cssModules: {

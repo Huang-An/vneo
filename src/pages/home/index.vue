@@ -19,11 +19,14 @@
 <script setup lang="ts">
 import './index.scss'
 
+import FleaMarket from '@/assets/images/flea-market.png'
+
 import Square from './components/square/index.vue'
 import Explore from './components/explore/index.vue'
 
 import { ref } from 'vue'
 import { navigateToByName } from '@/common/route'
+import { useShareAppMessage } from '@tarojs/taro'
 import { Tabs as NutTabs, TabPane as NutTabpane } from '@nutui/nutui-taro'
 
 const state = ref('0')
@@ -32,4 +35,9 @@ const state = ref('0')
 const goPublish = () => {
   navigateToByName('articles-publish')
 }
+
+useShareAppMessage(() => ({
+  title: 'VNeo的广场上都有什么呢？',
+  imageUrl: FleaMarket
+}))
 </script>
