@@ -1,5 +1,5 @@
 const cloud = require('wx-server-sdk')
-const { Database, createResponeBySuccess } = require('@vneo/cloud-utils')
+const { Database, createResponeBySuccess, createResponeByError } = require('@vneo/cloud-utils')
 
 cloud.init()
 
@@ -19,16 +19,32 @@ exports.addOrUpdate = async params => {
   const { OPENID: userId } = cloud.getWXContext()
 
   const db = new Database(cloud.database(), 'user')
+  const $ = db.command()
+  const data = { ...params, userId }
 
-  const total = await db.getCount(1, 1, { userId })
+  // 查询昵称是否已经被占用
+  const hasUserName = await db.getCount({
+    userId: $.neq(userId),
+    userName: params.userName
+  })
 
-  if (total !== 0) {
-    // 如果存在用户 更新
-    await db.update({ userId }, params)
-  } else {
-    // 如果不存在用户 新增
-    await db.add({ ...params, userId })
+  // 昵称已存在
+  if (hasUserName) {
+    return createResponeByError('该昵称已存在~')
   }
 
-  return createResponeBySuccess({ ...params, userId })
+  // 查询该用户是否已经存在
+  const hasUser = await db.getCount({ userId })
+
+  // 如果存在用户 更新
+  if (hasUser) {
+    await db.update({ userId }, params)
+
+    return createResponeBySuccess(data)
+  }
+
+  // 如果不存在用户 新增
+  await db.add(data)
+
+  return createResponeBySuccess(data)
 }

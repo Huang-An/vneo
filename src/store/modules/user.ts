@@ -1,6 +1,7 @@
 import { store } from '@/store'
 import { defineStore } from 'pinia'
 import { useAppStoreWithOut } from './app'
+import { navigateBack } from '@tarojs/taro'
 import { login, addOrUpdate } from '@/api/user'
 import { redirectToByName, switchTabByName, navigateToByName } from '@/common/route'
 import { getMultiStorage, setMultiStorage, removeMultiStorage } from '@/common/helper'
@@ -49,10 +50,15 @@ export const useUserStore = defineStore({
       switchTabByName('home')
     },
 
+    // 添加或更新用户信息
     async addOrUpdate(params: AddOrUpdateParams) {
       const { data } = await addOrUpdate(params)
 
+      // 设置用户信息
       this.setUserInfo(data)
+
+      // 返回上一页
+      navigateBack()
     },
 
     loginOut() {

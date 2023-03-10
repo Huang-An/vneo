@@ -19,19 +19,8 @@ exports.Database = class Database {
     return this.db.collection(collectName)
   }
 
-  // 获取用户信息，userId 不传获取当前登录用户
-  async getUserInfo(userId) {
-    if (!userId) {
-      userId = cloud.getWXContext().OPENID
-    }
-
-    const result = await this.collection('user').where({ userId }).get()
-
-    if (result.errMsg !== 'collection.get:ok') {
-      throw new Error(result.errMsg)
-    }
-
-    return result.data[0] || {}
+  userId() {
+    return cloud.getWXContext().OPENID
   }
 
   // 单表总数查询
@@ -68,7 +57,7 @@ exports.Database = class Database {
 
   // 单表新增
   async add(params = {}) {
-    const { userId, userName } = await this.getUserInfo()
+    const userId = this.userId()
 
     const currentDate = this.db.serverDate()
 
@@ -77,9 +66,7 @@ exports.Database = class Database {
       createDate: currentDate,
       updateDate: currentDate,
       createUserById: userId,
-      updateUserById: userId,
-      createUserByName: userName,
-      updateUserByName: userName
+      updateUserById: userId
     }
 
     const result = await this.collection().add({ data })
@@ -96,15 +83,10 @@ exports.Database = class Database {
 
   // 单表更新
   async update(searchs = {}, params = {}) {
-    const { userId, userName } = await this.getUserInfo()
-
-    const currentDate = this.db.serverDate()
-
     const data = {
       ...params,
-      updateDate: currentDate,
-      updateUserById: userId,
-      updateUserByName: userName
+      updateUserById: this.userId(),
+      updateDate: this.db.serverDate()
     }
 
     const result = await this.collection().where(searchs).update({ data })

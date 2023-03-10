@@ -61,18 +61,20 @@ const submit = async () => {
     return false
   }
 
+  let _avatar = avatar.value
+
   // 上传头像
-  if (avatar.value !== defaultAvatarUrl) {
+  if (_avatar !== defaultAvatarUrl) {
     const { fileID } = await cloud.uploadFile({
       filePath: avatar.value,
       cloudPath: avatar.value.split('/').pop() || ''
     })
 
-    avatar.value = fileID
+    _avatar = fileID
   }
 
   await store.addOrUpdate({
-    avatar: avatar.value,
+    avatar: _avatar,
     userName: userName.value
   })
 }

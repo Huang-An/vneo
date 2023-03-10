@@ -1,12 +1,12 @@
 {
   "name": "@vneo/cloud-articles",
   "license": "ISC",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "Huang-An",
   "description": "vneo cloud articles api",
   "main": "index.js",
   "dependencies": {
     "wx-server-sdk": "~2.6.3",
-    "@vneo/cloud-utils": "^1.0.2"
+    "@vneo/cloud-utils": "^1.0.3"
   }
 }
