@@ -1,5 +1,3 @@
 export default definePageConfig({
-  navigationBarTitleText: '发布',
-
-  enableShareAppMessage: true
+  navigationBarTitleText: '发布'
 })

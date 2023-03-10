@@ -16,7 +16,7 @@ export const fail = (message = '错误') => {
   })
 }
 
-export const message = (message: string, duration?: number) => {
+export const message = (message: string, duration: number = 1500) => {
   Taro.showToast({
     title: message,
     icon: 'none',
