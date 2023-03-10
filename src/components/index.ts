@@ -1,5 +1,5 @@
-import { Icon, Popup, OverLay, Swiper, SwiperItem, Sticky } from '@nutui/nutui-taro'
 import { setupRegisterGlobalComponent } from './common'
+import { Icon, Popup, OverLay, Swiper, SwiperItem, Sticky } from '@nutui/nutui-taro'
 
 import type { App } from 'vue'
 

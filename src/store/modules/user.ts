@@ -1,12 +1,11 @@
 import { store } from '@/store'
-import { login } from '@/api/user'
 import { defineStore } from 'pinia'
 import { useAppStoreWithOut } from './app'
-import { getUserProfile } from '@tarojs/taro'
-import { redirectToByName, switchTabByName } from '@/common/route'
+import { login, addOrUpdate } from '@/api/user'
+import { redirectToByName, switchTabByName, navigateToByName } from '@/common/route'
 import { getMultiStorage, setMultiStorage, removeMultiStorage } from '@/common/helper'
 
-import type { LoginResponse as UserInfo } from '@/api/user/type'
+import type { UserInfo, AddOrUpdateParams } from '@/api/user/type'
 
 export const useUserStore = defineStore({
   id: 'user',
@@ -37,16 +36,23 @@ export const useUserStore = defineStore({
     },
 
     async login() {
-      const { userInfo } = await getUserProfile({ desc: '登录' })
+      const { data } = await login()
 
-      const { data } = await login({
-        avatar: userInfo.avatarUrl,
-        userName: userInfo.nickName
-      })
+      // 查不到用户信息，前去注册
+      if (data.total === 0) {
+        navigateToByName('personal-update')
+        return
+      }
+
+      // 进入首页
+      this.setUserInfo(data.items[0])
+      switchTabByName('home')
+    },
+
+    async addOrUpdate(params: AddOrUpdateParams) {
+      const { data } = await addOrUpdate(params)
 
       this.setUserInfo(data)
-
-      switchTabByName('home')
     },
 
     loginOut() {

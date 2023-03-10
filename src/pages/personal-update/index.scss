@@ -1,0 +1,52 @@
+@import '@/assets/styles/common/var.scss';
+@import '@/assets/styles/mixins/mixins.scss';
+
+@include b(personal-update) {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  @include e(form) {
+    background: #fff;
+
+    @include m(item) {
+      display: flex;
+      width: 100%;
+      height: 50px;
+      padding: 0 16px;
+      align-items: center;
+      box-sizing: border-box;
+      border-bottom: $border;
+
+      .title {
+        flex: 0 0 50px;
+        font-size: 14px;
+      }
+
+      .content {
+        flex: 1;
+        text-align: right;
+
+        button {
+          width: 40px;
+          height: 40px;
+          padding: 0;
+          line-height: 0;
+          border: none;
+
+          image {
+            height: 40px;
+            width: 40px;
+          }
+        }
+      }
+    }
+  }
+
+  @include e(submit) {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 30px;
+  }
+}

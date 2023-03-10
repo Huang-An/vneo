@@ -29,6 +29,7 @@ import './index.scss'
 
 import { ref } from 'vue'
 import { chooseImage, cloud } from '@tarojs/taro'
+import { showLoading, hideLoading } from '@/common/toast'
 
 import type { PropType } from 'vue'
 import type { FileList, FileIdList } from './type'
@@ -75,20 +76,26 @@ const close = (index: number) => {
 
 // 外部手动上传
 const upload = async () => {
-  for (let i = 0, l = fileList.value.length; i < l; i++) {
-    const item = fileList.value[i]
+  try {
+    showLoading(true)
 
-    const { fileID } = await cloud.uploadFile({
-      cloudPath: item.tempPath.split('/').pop() || '',
-      filePath: item.tempPath
-    })
+    for (let i = 0, l = fileList.value.length; i < l; i++) {
+      const item = fileList.value[i]
 
-    fileList.value[i].id = fileID
+      const { fileID } = await cloud.uploadFile({
+        cloudPath: item.tempPath.split('/').pop() || '',
+        filePath: item.tempPath
+      })
+
+      fileList.value[i].id = fileID
+    }
+
+    update()
+
+    return fileList.value
+  } finally {
+    hideLoading()
   }
-
-  update()
-
-  return fileList.value
 }
 
 defineExpose({ upload })

@@ -6,7 +6,7 @@ const BASE_URL = 'articles'
 
 // 新增
 export const add = async (params: ArticlesAdd.Params) =>
-  await callFunction<ArticlesAdd.Response>(`${BASE_URL}/add`, params, { isLoading: false })
+  await callFunction<ArticlesAdd.Response>(`${BASE_URL}/add`, params)
 
 // 列表
 export const list = async (params: ArticlesList.Params) =>

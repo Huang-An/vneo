@@ -1,12 +1,11 @@
-// 登录接口请求参数
-export type LoginParams = {
-  avatar: string
-  userName: string
-}
-
-// 登录接口响应
-export type LoginResponse = {
+export type UserInfo = {
   userId: string
   avatar: string
   userName: string
 }
+
+export type LoginResponse = BaseListResponse<BaseListItem & UserInfo>
+
+export type AddOrUpdateParams = Omit<UserInfo, 'userId'>
+
+export type AddOrUpdateResponse = UserInfo

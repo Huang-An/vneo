@@ -25,8 +25,9 @@ import { navigateToByName } from '@/common/route'
 import { useUserStore } from '@/store/modules/user'
 import { Button as NutButton, Checkbox as NutCheckbox } from '@nutui/nutui-taro'
 
-const isAgree = ref(false)
 const store = useUserStore()
+
+const isAgree = ref(false)
 
 const login = async () => {
   if (!isAgree.value) {
@@ -39,6 +40,7 @@ const login = async () => {
 
 const openAgreementPrivacy = () => {
   navigateToByName('agreement-privacy')
+
   isAgree.value = true
 }
 </script>

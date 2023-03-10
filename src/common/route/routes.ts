@@ -48,6 +48,14 @@ export const routes = [
     }
   },
   {
+    title: '完善用户信息',
+    name: 'personal-update',
+    path: 'pages/personal-update/index',
+    meta: {
+      isWhite: true
+    }
+  },
+  {
     title: '发布',
     name: 'articles-publish',
     path: 'pages/articles-publish/index'

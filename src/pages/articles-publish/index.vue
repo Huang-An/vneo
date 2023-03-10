@@ -2,14 +2,14 @@
   <div class="vneo-articles-publish">
     <vneo-select v-model="form.type" :border="false" :columns="columns" />
 
-    <nut-input v-model="form.title" :border="false" max-length="25" :placeholder="columnConfig?.titlePlaceholder" />
+    <nut-input v-model="form.title" max-length="25" :border="false" :placeholder="columnConfig?.titlePlaceholder" />
 
-    <nut-text-area v-model="form.content" :placeholder="columnConfig?.contentPlaceholder" />
+    <nut-text-area v-model="form.content" max-length="500" :placeholder="columnConfig?.contentPlaceholder" />
 
     <vneo-uploader v-model="form.imageList" ref="uploaderRef" />
 
     <div class="vneo-articles-publish__submit">
-      <nut-button block type="primary" :loading="isLoading" @click="submit">发 布</nut-button>
+      <nut-button block type="primary" @click="submit">发 布</nut-button>
     </div>
   </div>
 </template>
@@ -25,7 +25,6 @@ import { Input as NutInput, TextArea as NutTextArea, Button as NutButton } from 
 
 import type { ArticlesAdd } from '@/api/articles/type'
 
-const isLoading = ref(false)
 const columns = reactive(PUBLISH_CHANNEL_TYPES)
 const columnConfig = computed(() => columns.find(column => column.value === form.type))
 
@@ -39,10 +38,6 @@ const form = reactive<ArticlesAdd.Params>({
 const uploaderRef = ref<any>(null)
 
 const submit = async () => {
-  if (isLoading.value) {
-    return
-  }
-
   if (!form.type) {
     fail('请选择发布类型~')
     return
@@ -59,14 +54,11 @@ const submit = async () => {
   }
 
   try {
-    isLoading.value = true
-
     await uploaderRef.value.upload()
 
     await add(form)
     success('发布成功~')
   } finally {
-    isLoading.value = false
   }
 }
 </script>

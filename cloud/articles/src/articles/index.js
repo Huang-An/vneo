@@ -20,7 +20,7 @@ exports.list = async (params, event, context) => {
 
   // 聚合查询
   const { errMsg, list } = await db
-    .getCollection()
+    .collection()
     // 发起聚合查询
     .aggregate()
     // 类似 where 过滤
@@ -78,7 +78,7 @@ exports.likeOrCollect = async params => {
 
   // 如果有数据 就更新
   if (total) {
-    await db.update(search)(params)
+    await db.update(search, params)
   } else {
     await db.add(params)
   }

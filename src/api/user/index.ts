@@ -1,7 +1,10 @@
 import { callFunction } from '@/common/cloud-function'
 
-import type { LoginParams, LoginResponse } from './type'
+import type { LoginResponse, AddOrUpdateParams, AddOrUpdateResponse } from './type'
 
 const BASE_URL = 'user'
 
-export const login = async (params: LoginParams) => await callFunction<LoginResponse>(`${BASE_URL}/login`, params)
+export const login = async () => await callFunction<LoginResponse>(`${BASE_URL}/login`)
+
+export const addOrUpdate = async (params: AddOrUpdateParams) =>
+  await callFunction<AddOrUpdateResponse>(`${BASE_URL}/addOrUpdate`, params)

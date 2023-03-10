@@ -15,17 +15,17 @@ exports.Database = class Database {
     return this.db.command
   }
 
-  getCollection(collectName = this.collectName) {
+  collection(collectName = this.collectName) {
     return this.db.collection(collectName)
   }
 
-  // 获取用户信息
+  // 获取用户信息，userId 不传获取当前登录用户
   async getUserInfo(userId) {
     if (!userId) {
       userId = cloud.getWXContext().OPENID
     }
 
-    const result = await this.getCollection('user').where({ userId }).get()
+    const result = await this.collection('user').where({ userId }).get()
 
     if (result.errMsg !== 'collection.get:ok') {
       throw new Error(result.errMsg)
@@ -34,9 +34,9 @@ exports.Database = class Database {
     return result.data[0] || {}
   }
 
-  // 查询总数
+  // 单表总数查询
   async getCount(searchs = {}) {
-    const { errMsg, total } = await this.getCollection().where(searchs).count()
+    const { errMsg, total } = await this.collection().where(searchs).count()
 
     if (errMsg !== 'collection.count:ok') {
       throw new Error(errMsg)
@@ -45,11 +45,11 @@ exports.Database = class Database {
     return total
   }
 
-  // 单表分页查询
-  async queryByPagination(pageIndex = 1, pageSize = 10, searchs = {}) {
+  // 单表分页列表查询
+  async getByPagination(pageIndex = 1, pageSize = 10, searchs = {}) {
     const total = await this.getCount()
 
-    const getResult = await this.getCollection()
+    const getResult = await this.collection()
       .where(searchs)
       .skip((pageIndex - 1) * pageSize)
       .limit(pageSize)
@@ -61,61 +61,61 @@ exports.Database = class Database {
 
     return {
       total,
+      pageIndex,
       items: getResult.data
     }
   }
 
-  // 新增
-  async add(params, operateUserId, operateUserName) {
-    if (!operateUserId || !operateUserName) {
-      const userInfo = await this.getUserInfo(operateUserId)
-
-      operateUserId = userInfo.userId
-      operateUserName = userInfo.userName
-    }
+  // 单表新增
+  async add(params = {}) {
+    const { userId, userName } = await this.getUserInfo()
 
     const currentDate = this.db.serverDate()
 
-    const result = await this.getCollection().add({
-      data: {
-        ...params,
-        createDate: currentDate,
-        updateDate: currentDate,
-        createUserById: operateUserId,
-        updateUserById: operateUserId,
-        createUserByName: operateUserName,
-        updateUserByName: operateUserName
-      }
-    })
+    const data = {
+      ...params,
+      createDate: currentDate,
+      updateDate: currentDate,
+      createUserById: userId,
+      updateUserById: userId,
+      createUserByName: userName,
+      updateUserByName: userName
+    }
+
+    const result = await this.collection().add({ data })
 
     if (result.errMsg !== 'collection.add:ok') {
       throw new Error(result.errMsg)
     }
 
-    return true
+    return {
+      data,
+      status: true
+    }
   }
 
-  // 更新
-  update(searchs) {
-    return async (params, operateUserId, operateUserName) => {
-      const currentDate = this.db.serverDate()
+  // 单表更新
+  async update(searchs = {}, params = {}) {
+    const { userId, userName } = await this.getUserInfo()
 
-      const result = await this.getCollection()
-        .where(searchs)
-        .update({
-          data: {
-            ...params,
-            updateDate: currentDate,
-            updateUserById: operateUserId,
-            updateUserByName: operateUserName
-          }
-        })
+    const currentDate = this.db.serverDate()
 
-      if (result.errMsg !== 'collection.update:ok') {
-        throw new Error(result.errMsg)
-      }
+    const data = {
+      ...params,
+      updateDate: currentDate,
+      updateUserById: userId,
+      updateUserByName: userName
+    }
 
-      return true
+    const result = await this.collection().where(searchs).update({ data })
+
+    if (result.errMsg !== 'collection.update:ok') {
+      throw new Error(result.errMsg)
+    }
+
+    return {
+      data,
+      status: true
     }
   }
 }

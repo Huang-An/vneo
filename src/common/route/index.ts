@@ -20,24 +20,28 @@ export const isWhiteByPath = (path: string) => {
   return route && route.meta && route.meta.isWhite
 }
 
+// 判断路径是否是登录页
 export const isLoginByPath = (path: string) => {
   const route = getRouteByPath(path)
 
   return route && route.meta && route.meta.isLogin
 }
 
+// 根据路由名称 跳转对应页面
 export const redirectToByName = (name: string) => {
   const route = getRouteByName(name)
 
   route && redirectTo({ url: `/${route.path}` })
 }
 
+// 根据路由名称 跳转对应页面
 export const switchTabByName = (name: string) => {
   const route = getRouteByName(name)
 
   route && switchTab({ url: `/${route.path}` })
 }
 
+// 根据路由名称 跳转对应页面
 export const navigateToByName = (
   name: string,
   option?: Omit<Taro.navigateTo.Option, 'url'> & { params?: Record<string, any> }
