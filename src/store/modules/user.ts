@@ -1,13 +1,14 @@
 import { store } from '@/store'
+import { go } from '@/common/route'
 import { defineStore } from 'pinia'
-import { message } from '@/common/toast'
+import { success } from '@/common/toast'
 import { useAppStoreWithOut } from './app'
-import { navigateBack } from '@tarojs/taro'
-import { login, addOrUpdate } from '@/api/user'
-import { redirectToByName, switchTabByName, navigateToByName } from '@/common/route'
+import { DEFAULT_AVATAR } from '@/constant'
+import { login, register, update } from '@/api/user'
+import { showModal, navigateBack } from '@tarojs/taro'
 import { getMultiStorage, setMultiStorage, removeMultiStorage } from '@/common/helper'
 
-import type { UserInfo, AddOrUpdateParams } from '@/api/user/type'
+import type { UserInfo, RegisterParams, UpdateParams } from '@/api/user/type'
 
 export const useUserStore = defineStore({
   id: 'user',
@@ -16,7 +17,7 @@ export const useUserStore = defineStore({
 
   getters: {
     getUserId: state => state.userId,
-    getAvatar: state => state.avatar,
+    getAvatar: state => state.avatar || DEFAULT_AVATAR,
     getUserName: state => state.userName
   },
 
@@ -42,23 +43,30 @@ export const useUserStore = defineStore({
 
       // 查不到用户信息，前去注册
       if (data.total === 0) {
-        navigateToByName('personal-update')
-
-        setTimeout(() => {
-          message('为了您能正常使用，请先完善用户信息~')
-        }, 500)
-
+        go('register')
         return
       }
 
-      // 进入首页
       this.setUserInfo(data.items[0])
-      switchTabByName('home')
+
+      // 进入首页
+      useAppStoreWithOut().goHome()
     },
 
-    // 添加或更新用户信息
-    async addOrUpdate(params: AddOrUpdateParams) {
-      const { data } = await addOrUpdate(params)
+    // 注册
+    async register(params: RegisterParams) {
+      const { data } = await register(params)
+
+      // 设置用户信息
+      this.setUserInfo(data)
+
+      // 进入首页
+      useAppStoreWithOut().goHome()
+    },
+
+    // 更新
+    async update(params: UpdateParams) {
+      const { data } = await update(params)
 
       // 设置用户信息
       this.setUserInfo(data)
@@ -67,13 +75,17 @@ export const useUserStore = defineStore({
       navigateBack()
     },
 
-    loginOut() {
+    async loginOut() {
+      const { confirm } = await showModal({
+        title: '提示',
+        content: '是否退出登录？'
+      })
+
+      if (!confirm) return
+
       this.removeUserInfo()
 
-      redirectToByName('login')
-
-      // 重置 tab
-      useAppStoreWithOut().resetTab()
+      success('退出登录成功~')
     }
   }
 })

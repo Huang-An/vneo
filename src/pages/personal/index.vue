@@ -3,7 +3,9 @@
     <div class="vneo-personal__user">
       <image :src="store.getAvatar" mode="aspectFill" class="vneo-personal__user--avatar" />
 
-      <div class="vneo-personal__user--username">{{ store.getUserName }}</div>
+      <div v-if="store.getUserId" class="vneo-personal__user--username">{{ store.getUserName }}</div>
+
+      <div v-else class="vneo-personal__user--username" @click="goLogin">暂未登录，点击登录</div>
     </div>
 
     <nut-cell-group class="vneo-personal__menu">
@@ -18,7 +20,9 @@
       />
     </nut-cell-group>
 
-    <nut-button type="default" class="vneo-personal__loginout" @click="loginOut">退出登录</nut-button>
+    <nut-button v-if="store.getUserId" type="default" class="vneo-personal__loginout" @click="store.loginOut">
+      退出登录
+    </nut-button>
   </div>
 </template>
 
@@ -26,9 +30,8 @@
 import './index.scss'
 
 import { reactive } from 'vue'
-import { showModal } from '@tarojs/taro'
+import { go } from '@/common/route'
 import { message } from '@/common/toast'
-import { navigateToByName } from '@/common/route'
 import { useUserStore } from '@/store/modules/user'
 
 const store = useUserStore()
@@ -42,13 +45,10 @@ const menuList = reactive([
   { name: '隐私协议', icon: 'marshalling', to: 'agreement-privacy' }
 ])
 
-const loginOut = async () => {
-  const { confirm } = await showModal({
-    title: '提示',
-    content: '是否退出登录？'
-  })
-
-  confirm && store.loginOut()
+const goLogin = () => {
+  if (!store.getUserId) {
+    go('login')
+  }
 }
 
 const openMenu = (name: string, to: string) => {
@@ -57,6 +57,6 @@ const openMenu = (name: string, to: string) => {
     return
   }
 
-  navigateToByName(to)
+  go(to)
 }
 </script>

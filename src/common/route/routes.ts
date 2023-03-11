@@ -9,6 +9,14 @@ export const routes = [
     }
   },
   {
+    title: '注册',
+    name: 'register',
+    path: 'pages/register/index',
+    meta: {
+      isWhite: true
+    }
+  },
+  {
     title: '隐私协议',
     name: 'agreement-privacy',
     path: 'pages/agreement-privacy/index',
@@ -22,6 +30,7 @@ export const routes = [
     path: 'pages/home/index',
     meta: {
       isHome: true,
+      isWhite: true,
       isTabbar: true,
       tabbarIcon: 'home',
       tabbarSelectedIcon: 'home-fill'
@@ -42,6 +51,7 @@ export const routes = [
     name: 'personal',
     path: 'pages/personal/index',
     meta: {
+      isWhite: true,
       isTabbar: true,
       tabbarIcon: 'bussiness-man',
       tabbarSelectedIcon: 'bussiness-man-fill'
@@ -50,10 +60,7 @@ export const routes = [
   {
     title: '编辑资料',
     name: 'personal-update',
-    path: 'pages/personal-update/index',
-    meta: {
-      isWhite: true
-    }
+    path: 'pages/personal-update/index'
   },
   {
     title: '我的文章',

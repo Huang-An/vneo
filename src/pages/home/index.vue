@@ -25,7 +25,7 @@ import Square from './components/square/index.vue'
 import Explore from './components/explore/index.vue'
 
 import { ref } from 'vue'
-import { navigateToByName } from '@/common/route'
+import { go } from '@/common/route'
 import { useAppStore } from '@/store/modules/app'
 import { eventCenter, useShareAppMessage } from '@tarojs/taro'
 
@@ -38,7 +38,7 @@ const goPublish = () => {
     return
   }
 
-  navigateToByName('articles-publish')
+  go('articles-publish')
 }
 
 // 监听 广场文章发布成功 事件

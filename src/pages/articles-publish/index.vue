@@ -80,7 +80,7 @@ const submitSuccess = (type: number) => {
   setTimeout(() => {
     if (type === 1) {
       // 切换首页 tab
-      store.switchTab('home')
+      store.goHome()
       // 触发 广场文章发布成功 事件
       eventCenter.trigger('articles-publish-by-square')
       return

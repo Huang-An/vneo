@@ -20,8 +20,8 @@ import './index.scss'
 import loginLogo from '@/assets/images/login-logo.png'
 
 import { ref } from 'vue'
+import { go } from '@/common/route'
 import { message } from '@/common/toast'
-import { navigateToByName } from '@/common/route'
 import { useShareAppMessage } from '@tarojs/taro'
 import { useUserStore } from '@/store/modules/user'
 
@@ -39,7 +39,7 @@ const login = async () => {
 }
 
 const openAgreementPrivacy = () => {
-  navigateToByName('agreement-privacy')
+  go('agreement-privacy')
 
   isAgree.value = true
 }

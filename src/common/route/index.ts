@@ -1,65 +1,39 @@
+import { loginInquiry } from '@/common/helper'
+import { NO_PERMISSION_INFO } from '@/constant'
 import { routes, createTabbarList } from './routes'
+import { useUserStoreWithOut } from '@/store/modules/user'
 import { redirectTo, switchTab, navigateTo } from '@tarojs/taro'
+import { getRouteByName, getRouteByPath, isWhiteByPath, isLoginByPath, foramtPathByParams } from './helper'
 
 export { routes, createTabbarList }
 
-// 根据名称获取路由配置
-export const getRouteByName = (name: string) => {
-  return routes.find(route => route.name === name)
-}
+export { getRouteByName, getRouteByPath, isWhiteByPath, isLoginByPath }
 
-// 根据路径获取路由配置
-export const getRouteByPath = (path: string) => {
-  return routes.find(route => route.path === path || `/${route.path}` === path)
-}
-
-// 判断路径是否是白名单
-export const isWhiteByPath = (path: string) => {
-  const route = getRouteByPath(path)
-
-  return route && route.meta && route.meta.isWhite
-}
-
-// 判断路径是否是登录页
-export const isLoginByPath = (path: string) => {
-  const route = getRouteByPath(path)
-
-  return route && route.meta && route.meta.isLogin
-}
-
-// 根据路由名称 跳转对应页面
-export const redirectToByName = (name: string) => {
-  const route = getRouteByName(name)
-
-  route && redirectTo({ url: `/${route.path}` })
-}
-
-// 根据路由名称 跳转对应页面
-export const switchTabByName = (name: string) => {
-  const route = getRouteByName(name)
-
-  route && switchTab({ url: `/${route.path}` })
-}
-
-// 根据路由名称 跳转对应页面
-export const navigateToByName = (
+// 路由跳转
+export const go = async (
   name: string,
+  type: 'redirectTo' | 'switchTab' | 'navigateTo' = 'navigateTo',
   option?: Omit<Taro.navigateTo.Option, 'url'> & { params?: Record<string, any> }
 ) => {
   const route = getRouteByName(name)
+  const store = useUserStoreWithOut()
 
   if (!route) return
 
-  // 处理参数
-  const params = option && option.params ? option.params : {}
+  // 如果未登录，并且不是白名单，提示先登录
+  if (!store.getUserId && !isWhiteByPath(route.path)) {
+    loginInquiry()
 
-  let param = Object.keys(params)
-    .map(key => `${key}=${params[key]}`)
-    .join('&')
+    throw new Error(JSON.stringify(NO_PERMISSION_INFO))
+  }
 
-  // 处理路径
-  let url = `/${route?.path}`
-  url = param ? `${url}?${param}` : url
+  const url = foramtPathByParams(route.path, option && option.params ? option.params : {})
 
-  navigateTo({ url, ...option })
+  if (type === 'navigateTo') {
+    navigateTo({ url, ...option })
+  } else if (type === 'redirectTo') {
+    redirectTo({ url, ...option })
+  } else if (type === 'switchTab') {
+    switchTab({ url, ...option })
+  }
 }

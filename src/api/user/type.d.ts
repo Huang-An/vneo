@@ -6,6 +6,10 @@ export type UserInfo = {
 
 export type LoginResponse = BaseListResponse<BaseListItem & UserInfo>
 
-export type AddOrUpdateParams = Omit<UserInfo, 'userId'>
+export type RegisterParams = Omit<UserInfo, 'userId'>
 
-export type AddOrUpdateResponse = UserInfo
+export type RegisterResponse = UserInfo
+
+export type UpdateParams = Omit<UserInfo, 'userId'>
+
+export type UpdateResponse = UserInfo

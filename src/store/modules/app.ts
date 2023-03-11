@@ -1,7 +1,7 @@
 import { store } from '@/store'
 import { config } from '@/api/app'
 import { defineStore } from 'pinia'
-import { switchTabByName } from '@/common/route'
+import { go } from '@/common/route'
 
 import type { AppConfig } from '@/api/app/type'
 
@@ -47,14 +47,15 @@ export const useAppStore = defineStore({
       this.tabActiveName = tabActiveName
     },
 
-    switchTab(tabActiveName: string) {
-      this.setTabActiveName(tabActiveName)
+    async switchTab(tabActiveName: string) {
+      await go(tabActiveName, 'switchTab')
 
-      switchTabByName(tabActiveName)
+      this.setTabActiveName(tabActiveName)
     },
 
-    resetTab() {
-      this.setTabActiveName('home')
+    // 前往首页
+    goHome() {
+      this.switchTab('home')
     }
   }
 })

@@ -3,19 +3,8 @@ const { Database, createResponeBySuccess, createResponeByError } = require('@vne
 
 cloud.init()
 
-// 登录
-exports.login = async () => {
-  const { OPENID: userId } = cloud.getWXContext()
-
-  const db = new Database(cloud.database(), 'user')
-
-  const data = await db.getByPagination(1, 1, { userId })
-
-  return createResponeBySuccess(data)
-}
-
-// 新增/更新用户数据
-exports.addOrUpdate = async params => {
+// 新增或更新用户
+const addOrUpdate = async params => {
   const { OPENID: userId } = cloud.getWXContext()
 
   const db = new Database(cloud.database(), 'user')
@@ -48,3 +37,20 @@ exports.addOrUpdate = async params => {
 
   return createResponeBySuccess(data)
 }
+
+// 登录
+exports.login = async () => {
+  const { OPENID: userId } = cloud.getWXContext()
+
+  const db = new Database(cloud.database(), 'user')
+
+  const data = await db.getByPagination(1, 1, { userId })
+
+  return createResponeBySuccess(data)
+}
+
+// 注册
+exports.register = addOrUpdate
+
+// 更新用户数据
+exports.update = addOrUpdate

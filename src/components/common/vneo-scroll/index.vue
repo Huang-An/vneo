@@ -196,12 +196,21 @@ const updateRecord = (type: 'concat' | 'reset' | 'remove', data: Item[]) => {
   }
 }
 
-// 初始化加载
-if (props.isRefreshByShow) {
-  useDidShow(() => onRefresh())
-} else {
-  onRefresh()
+const start = () => {
+  const process = () => {
+    reset()
+    request(true)
+  }
+
+  if (props.isRefreshByShow) {
+    useDidShow(() => process())
+    return
+  }
+
+  process()
 }
+
+start()
 
 defineExpose({ updateRecord, onRefresh })
 </script>

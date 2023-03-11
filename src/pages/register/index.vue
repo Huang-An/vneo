@@ -1,8 +1,8 @@
 <template>
-  <div class="vneo-personal-update">
-    <div class="vneo-personal-update__form">
+  <div class="vneo-register">
+    <div class="vneo-register__form">
       <!-- 头像 -->
-      <div class="vneo-personal-update__form--item">
+      <div class="vneo-register__form--item">
         <div class="title">头像：</div>
 
         <div class="content">
@@ -13,7 +13,7 @@
       </div>
 
       <!-- 昵称 -->
-      <div class="vneo-personal-update__form--item">
+      <div class="vneo-register__form--item">
         <div class="title">昵称：</div>
 
         <div class="content">
@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <div class="vneo-personal-update__submit">
+    <div class="vneo-register__submit">
       <nut-button block type="primary" @click="submit">保 存</nut-button>
     </div>
   </div>
@@ -34,7 +34,7 @@ import './index.scss'
 import { ref } from 'vue'
 import { cloud } from '@tarojs/taro'
 import { useUserStore } from '@/store/modules/user'
-import { fail, success, showLoading, hideLoading } from '@/common/toast'
+import { fail, success, message, showLoading, hideLoading } from '@/common/toast'
 
 const store = useUserStore()
 
@@ -78,8 +78,8 @@ const submit = async () => {
       _avatar = fileID
     }
 
-    // 更新用户数据
-    await store.update({
+    // 注册
+    await store.register({
       avatar: _avatar,
       userName: userName.value
     })
@@ -89,4 +89,10 @@ const submit = async () => {
     hideLoading()
   }
 }
+
+const start = () => {
+  message('为了您能正常使用，请先完善用户信息~')
+}
+
+start()
 </script>

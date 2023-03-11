@@ -8,8 +8,12 @@ const route = new Route([
     behavior: user.login
   },
   {
-    url: '/addOrUpdate',
-    behavior: user.addOrUpdate
+    url: '/register',
+    behavior: user.register
+  },
+  {
+    url: '/update',
+    behavior: user.update
   }
 ])
 

@@ -66,7 +66,6 @@ import { actions } from './actions'
 import { format } from '@/common/helper'
 import { ref, computed, watch } from 'vue'
 import { likeOrCollect } from '@/api/articles'
-// import { navigateToByName } from '@/common/route'
 import { useUserStore } from '@/store/modules/user'
 import { previewImage, showActionSheet } from '@tarojs/taro'
 import { PRIVATE_USER_NAME, DEFAULT_AVATAR } from '@/constant'
@@ -217,9 +216,5 @@ const openActionSheet = async () => {
 }
 
 // 打开详情页
-const openArticlesDetail = () => {
-  // navigateToByName('articles-detail', {
-  //   params: { id: currentData.value._id }
-  // })
-}
+const openArticlesDetail = () => {}
 </script>

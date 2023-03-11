@@ -1,9 +1,18 @@
 import { cloud } from '@tarojs/taro'
+import { loginInquiry } from '@/common/helper'
 import { isBoolean } from '@const-an/helper-core'
-import { SUCCESS_CODE, ERROR_INFO } from '@/constant'
+import { useUserStoreWithOut } from '@/store/modules/user'
 import { fail, showLoading, hideLoading } from '@/common/toast'
+import { SUCCESS_CODE, ERROR_INFO, NO_PERMISSION_INFO, WHITE_URL_LIST } from '@/constant'
 
 import type { CallFunctionConfig, CallFunctionResponse } from './type'
+
+// 接口路径校验
+export const checkUrl = (url: string) => {
+  const store = useUserStoreWithOut()
+
+  return store.getUserId || WHITE_URL_LIST.includes(url)
+}
 
 // 生成云函数参数
 export const createParams = (path: string, params: any = {}): Taro.cloud.CallFunctionParam => {
@@ -18,6 +27,7 @@ export const createParams = (path: string, params: any = {}): Taro.cloud.CallFun
   }
 }
 
+// 云函数调用成功回调
 const callFunctionHandler = <R = any>(result: CallFunctionResponse, isErrorTips: boolean) => {
   hideLoading()
 
@@ -48,6 +58,13 @@ export const callFunction = async <R = any>(url: string, params: any = {}, confi
 
   if (config && config.loadingTips) {
     loadingTips = config.loadingTips
+  }
+
+  // 校验是否无权限
+  if (!checkUrl(url)) {
+    loginInquiry()
+
+    return callFunctionHandler<R>(NO_PERMISSION_INFO, false)
   }
 
   showLoading(isLoading, loadingTips)
