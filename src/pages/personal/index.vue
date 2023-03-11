@@ -30,7 +30,6 @@ import { showModal } from '@tarojs/taro'
 import { message } from '@/common/toast'
 import { navigateToByName } from '@/common/route'
 import { useUserStore } from '@/store/modules/user'
-import { CellGroup as NutCellGroup, Cell as NutCell, Button as NutButton } from '@nutui/nutui-taro'
 
 const store = useUserStore()
 

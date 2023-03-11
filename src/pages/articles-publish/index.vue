@@ -21,7 +21,6 @@ import { add } from '@/api/articles'
 import { ref, reactive, computed } from 'vue'
 import { fail, success } from '@/common/toast'
 import { PUBLISH_CHANNEL_TYPES } from '@/constant'
-import { Input as NutInput, TextArea as NutTextArea, Button as NutButton } from '@nutui/nutui-taro'
 
 import type { ArticlesAdd } from '@/api/articles/type'
 

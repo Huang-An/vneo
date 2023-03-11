@@ -24,7 +24,6 @@ import { message } from '@/common/toast'
 import { navigateToByName } from '@/common/route'
 import { useShareAppMessage } from '@tarojs/taro'
 import { useUserStore } from '@/store/modules/user'
-import { Button as NutButton, Checkbox as NutCheckbox } from '@nutui/nutui-taro'
 
 const store = useUserStore()
 

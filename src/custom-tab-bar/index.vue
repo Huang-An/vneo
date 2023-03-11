@@ -24,7 +24,6 @@ export default {
 import { ref } from 'vue'
 import { createTabbarList } from '@/common/route'
 import { useAppStore } from '@/store/modules/app'
-import { Tabbar as NutTabbar, TabbarItem as NutTabbarItem } from '@nutui/nutui-taro'
 
 const store = useAppStore()
 

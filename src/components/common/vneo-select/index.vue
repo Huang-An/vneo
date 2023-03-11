@@ -25,7 +25,6 @@ export default {
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { Input as NutInput, Picker as NutPicker } from '@nutui/nutui-taro'
 
 import type { PropType } from 'vue'
 import type { Columns } from './type'

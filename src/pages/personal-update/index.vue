@@ -34,7 +34,6 @@ import './index.scss'
 import { ref } from 'vue'
 import { cloud } from '@tarojs/taro'
 import { useUserStore } from '@/store/modules/user'
-import { Button as NutButton } from '@nutui/nutui-taro'
 import { fail, success, showLoading, hideLoading } from '@/common/toast'
 
 const store = useUserStore()

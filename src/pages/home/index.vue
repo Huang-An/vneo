@@ -27,7 +27,6 @@ import Explore from './components/explore/index.vue'
 import { ref } from 'vue'
 import { navigateToByName } from '@/common/route'
 import { useShareAppMessage } from '@tarojs/taro'
-import { Tabs as NutTabs, TabPane as NutTabpane } from '@nutui/nutui-taro'
 
 const state = ref('0')
 
