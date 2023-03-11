@@ -43,7 +43,11 @@ export const useUserStore = defineStore({
       // 查不到用户信息，前去注册
       if (data.total === 0) {
         navigateToByName('personal-update')
-        message('为了您能正常使用，请先完善用户信息~', 3000)
+
+        setTimeout(() => {
+          message('为了您能正常使用，请先完善用户信息~')
+        }, 500)
+
         return
       }
 
