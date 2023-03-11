@@ -3,13 +3,13 @@
     <!-- head -->
     <div class="vneo-articles-card__head">
       <!-- 用户头像 -->
-      <image :src="currentData.avatar" mode="aspectFill" class="vneo-articles-card__head--avatar" />
+      <image :src="avatar" mode="aspectFill" class="vneo-articles-card__head--avatar" />
 
       <!-- 用户信息 -->
       <div class="vneo-articles-card__head--user">
-        <div class="vneo-articles-card__head--username">{{ currentData.userName }}</div>
+        <div class="vneo-articles-card__head--username">{{ userName }}</div>
 
-        <div class="vneo-articles-card__head--date">{{ currentData.createDate }}</div>
+        <div class="vneo-articles-card__head--date">{{ format(currentData.createDate) }}</div>
       </div>
 
       <!-- 操作栏 -->
@@ -63,11 +63,13 @@
 import './index.scss'
 
 import { actions } from './actions'
+import { format } from '@/common/helper'
 import { ref, computed, watch } from 'vue'
 import { likeOrCollect } from '@/api/articles'
 // import { navigateToByName } from '@/common/route'
 import { useUserStore } from '@/store/modules/user'
 import { previewImage, showActionSheet } from '@tarojs/taro'
+import { PRIVATE_USER_NAME, DEFAULT_AVATAR } from '@/constant'
 
 import type { PropType } from 'vue'
 import type { Data, ArticlesLikeOrCollectParams } from './type'
@@ -77,14 +79,21 @@ const store = useUserStore()
 const emits = defineEmits(['remove'])
 
 const props = defineProps({
-  isShowFooter: {
+  data: {
+    required: true,
+    type: Object as PropType<Data>
+  },
+
+  // 是否启用匿名
+  enablePrivate: {
     type: Boolean,
     default: true
   },
 
-  data: {
-    required: true,
-    type: Object as PropType<Data>
+  // 是否显示底部操作
+  isShowFooter: {
+    type: Boolean,
+    default: true
   }
 })
 
@@ -95,6 +104,16 @@ watch(
   () => {
     currentData.value = props.data
   }
+)
+
+// 用户名称
+const userName = computed(() =>
+  props.enablePrivate && currentData.value.isPrivate ? PRIVATE_USER_NAME : currentData.value.userName
+)
+
+// 头像
+const avatar = computed(() =>
+  props.enablePrivate && currentData.value.isPrivate ? DEFAULT_AVATAR : currentData.value.avatar
 )
 
 // 图片列表

@@ -38,7 +38,7 @@ const menuList = reactive([
   { name: '我的收藏', icon: 'star-n', to: '' },
   { name: '我的点赞', icon: 'heart1', to: '' },
   { name: '我的评论', icon: 'message', to: '' },
-  { name: '编辑资料', icon: 'my', to: '' },
+  { name: '编辑资料', icon: 'my', to: 'personal-update' },
   { name: '隐私协议', icon: 'marshalling', to: 'agreement-privacy' }
 ])
 

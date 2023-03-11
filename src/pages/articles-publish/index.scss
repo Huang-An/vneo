@@ -11,5 +11,10 @@
     bottom: 75px;
     left: 15px;
     right: 15px;
+
+    @include m(private) {
+      text-align: right;
+      margin-bottom: 15px;
+    }
   }
 }

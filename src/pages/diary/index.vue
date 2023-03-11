@@ -1,7 +1,7 @@
 <template>
   <vneo-scroll ref="scrollRef" :load="load">
     <template #default="{ item }: { item: ArticlesList.ListItem }">
-      <vneo-articles-card :data="item" :is-show-footer="false" @remove="remove(item)" />
+      <vneo-articles-card :data="item" :is-show-footer="false" :enable-private="false" @remove="remove(item)" />
     </template>
   </vneo-scroll>
 </template>

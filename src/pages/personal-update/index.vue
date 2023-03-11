@@ -7,7 +7,7 @@
 
         <div class="content">
           <nut-button open-type="chooseAvatar" @chooseavatar="onChooseAvatar">
-            <image :src="avatar" />
+            <image :src="avatar" mode="aspectFill" />
           </nut-button>
         </div>
       </div>
@@ -33,27 +33,30 @@ import './index.scss'
 
 import { ref } from 'vue'
 import { cloud } from '@tarojs/taro'
+import { DEFAULT_AVATAR } from '@/constant'
 import { useUserStore } from '@/store/modules/user'
 import { fail, success, showLoading, hideLoading } from '@/common/toast'
 
 const store = useUserStore()
 
-const defaultAvatarUrl =
-  'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
+const defaultAvatar = store.getAvatar || DEFAULT_AVATAR
 
-const userName = ref('')
-const avatar = ref(defaultAvatarUrl)
+const avatar = ref(defaultAvatar)
+const userName = ref(store.getUserName)
 
-const onChooseUserName = (e: any) => {
-  userName.value = e.detail.value
-}
-
+// 选择头像
 const onChooseAvatar = (e: any) => {
   if (e.detail.avatarUrl) {
     avatar.value = e.detail.avatarUrl
   }
 }
 
+// 选择名字
+const onChooseUserName = (e: any) => {
+  userName.value = e.detail.value
+}
+
+// 提交
 const submit = async () => {
   // 校验昵称
   if (!userName.value) {
@@ -67,7 +70,7 @@ const submit = async () => {
     let _avatar = avatar.value
 
     // 上传头像
-    if (_avatar !== defaultAvatarUrl) {
+    if (_avatar !== defaultAvatar) {
       const { fileID } = await cloud.uploadFile({
         filePath: avatar.value,
         cloudPath: avatar.value.split('/').pop() || ''

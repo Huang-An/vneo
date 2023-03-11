@@ -5,6 +5,7 @@ export namespace ArticlesList {
     userName: string
     title: string
     content: string
+    isPrivate: boolean
     imageList: string[]
     likeOrCollectList: Array<BaseListItem & ArticlesLikeOrCollect.Params>
   }
@@ -25,6 +26,7 @@ export namespace ArticlesAdd {
     type: number
     title: string
     content: string
+    isPrivate: boolean
     imageList: string[]
   }
 

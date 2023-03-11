@@ -9,6 +9,15 @@
     <vneo-uploader v-model="form.imageList" ref="uploaderRef" />
 
     <div class="vneo-articles-publish__submit">
+      <nut-checkbox
+        v-model="form.isPrivate"
+        icon-size="12"
+        label="匿名发布"
+        class="vneo-articles-publish__submit--private"
+      >
+        匿名发布
+      </nut-checkbox>
+
       <nut-button block type="primary" @click="submit">发 布</nut-button>
     </div>
   </div>
@@ -35,6 +44,7 @@ const form = reactive<ArticlesAdd.Params>({
   type: 1,
   title: '',
   content: '',
+  isPrivate: false,
   imageList: []
 })
 
