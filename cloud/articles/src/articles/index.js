@@ -8,23 +8,31 @@ exports.list = async (params, event, context) => {
   const { OPENID } = cloud.getWXContext()
   const { pageIndex, pageSize, search = {} } = params
 
-  // 构建 where 查询条件
-  if (search.type === 2) search.createUserById = OPENID
+  const _search = {
+    // type 1 广场 2 日记
+    type: search.type || 1,
+    // isPersonal 是否只查自己的
+    createUserById: search.isPersonal ? OPENID : undefined
+  }
 
   // 初始化数据库
   const db = new Database(cloud.database(), 'articles')
   const $ = db.command()
 
   // 查询总条数
-  const total = await db.getCount(search)
+  const total = await db.getCount(_search)
 
   // 聚合查询
-  const { errMsg, list } = await db
+  const { errMsg, list: items } = await db
     .collection()
     // 发起聚合查询
     .aggregate()
     // 类似 where 过滤
-    .match(search)
+    .match(_search)
+    // 按时间进行排序
+    .sort({
+      createDate: -1
+    })
     // 左外连接
     .lookup({
       from: 'user',
@@ -52,8 +60,8 @@ exports.list = async (params, event, context) => {
 
   return createResponeBySuccess({
     total,
-    pageIndex,
-    items: list
+    items,
+    pageIndex
   })
 }
 
@@ -62,6 +70,15 @@ exports.add = async params => {
   const db = new Database(cloud.database(), 'articles')
 
   await db.add(params)
+
+  return createResponeBySuccess(true)
+}
+
+// 删除
+exports.remove = async params => {
+  const db = new Database(cloud.database(), 'articles')
+
+  await db.remove(params)
 
   return createResponeBySuccess(true)
 }

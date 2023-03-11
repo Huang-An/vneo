@@ -77,7 +77,7 @@ const close = (index: number) => {
 // 外部手动上传
 const upload = async () => {
   try {
-    showLoading(true)
+    showLoading()
 
     for (let i = 0, l = fileList.value.length; i < l; i++) {
       const item = fileList.value[i]

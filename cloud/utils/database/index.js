@@ -100,4 +100,18 @@ exports.Database = class Database {
       status: true
     }
   }
+
+  // 单表删除
+  async remove(searchs = {}) {
+    const result = await this.collection().where(searchs).remove()
+
+    if (result.errMsg !== 'collection.remove:ok') {
+      throw new Error(result.errMsg)
+    }
+
+    return {
+      status: true,
+      data: result.stats
+    }
+  }
 }

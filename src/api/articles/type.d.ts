@@ -1,15 +1,3 @@
-// 新增
-export namespace ArticlesAdd {
-  type Params = {
-    type: number
-    title: string
-    content: string
-    imageList: string[]
-  }
-
-  type Response = boolean
-}
-
 // 列表
 export namespace ArticlesList {
   type ListItem = BaseListItem & {
@@ -24,9 +12,32 @@ export namespace ArticlesList {
   type Params = BaseListParams<{
     // 1 广场 2 日记
     type: 1 | 2
+    // 是否只查自己
+    isPersonal: boolean
   }>
 
   type Response = BaseListResponse<ListItem>
+}
+
+// 新增
+export namespace ArticlesAdd {
+  type Params = {
+    type: number
+    title: string
+    content: string
+    imageList: string[]
+  }
+
+  type Response = boolean
+}
+
+// 删除
+export namespace ArticlesRemove {
+  type Params = {
+    _id: string
+  }
+
+  type Response = boolean
 }
 
 // 点赞收藏

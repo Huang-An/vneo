@@ -2,17 +2,19 @@ import Taro from '@tarojs/taro'
 
 let loadingCount: number = 0
 
-export const success = (message = '成功') => {
+export const success = (message = '成功', duration: number = 1500) => {
   Taro.showToast({
     title: message,
-    icon: 'success'
+    icon: 'success',
+    duration
   })
 }
 
-export const fail = (message = '错误') => {
+export const fail = (message = '错误', duration: number = 1500) => {
   Taro.showToast({
     title: message,
-    icon: 'error'
+    icon: 'error',
+    duration
   })
 }
 
@@ -24,7 +26,7 @@ export const message = (message: string, duration: number = 1500) => {
   })
 }
 
-export function showLoading(isLoading: boolean, message = '') {
+export function showLoading(isLoading: boolean = true, message = '正在加载...') {
   if (isLoading) {
     Taro.showLoading({
       mask: true,

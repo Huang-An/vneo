@@ -4,7 +4,7 @@
 
     <nut-input v-model="form.title" max-length="25" :border="false" :placeholder="columnConfig?.titlePlaceholder" />
 
-    <nut-text-area v-model="form.content" max-length="500" :placeholder="columnConfig?.contentPlaceholder" />
+    <nut-textarea v-model="form.content" max-length="500" :placeholder="columnConfig?.contentPlaceholder" />
 
     <vneo-uploader v-model="form.imageList" ref="uploaderRef" />
 
@@ -18,11 +18,15 @@
 import './index.scss'
 
 import { add } from '@/api/articles'
+import { eventCenter } from '@tarojs/taro'
 import { ref, reactive, computed } from 'vue'
 import { fail, success } from '@/common/toast'
+import { useAppStore } from '@/store/modules/app'
 import { PUBLISH_CHANNEL_TYPES } from '@/constant'
 
 import type { ArticlesAdd } from '@/api/articles/type'
+
+const store = useAppStore()
 
 const columns = reactive(PUBLISH_CHANNEL_TYPES)
 const columnConfig = computed(() => columns.find(column => column.value === form.type))
@@ -52,12 +56,32 @@ const submit = async () => {
     return
   }
 
-  try {
-    await uploaderRef.value.upload()
+  await uploaderRef.value.upload()
 
-    await add(form)
-    success('发布成功~')
-  } finally {
-  }
+  await add(form)
+
+  submitSuccess(form.type)
+}
+
+const submitSuccess = (type: number) => {
+  success('发布成功~')
+
+  // 延迟跳转
+  setTimeout(() => {
+    if (type === 1) {
+      // 切换首页 tab
+      store.switchTab('home')
+      // 触发 广场文章发布成功 事件
+      eventCenter.trigger('articles-publish-by-square')
+      return
+    }
+
+    if (type === 2) {
+      // 切换日记 tab
+      store.switchTab('diary')
+      // 触发 广场文章发布成功 事件
+      eventCenter.trigger('articles-publish-by-diary')
+    }
+  }, 500)
 }
 </script>

@@ -1,7 +1,7 @@
 @import '@/assets/styles/common/var.scss';
 @import '@/assets/styles/mixins/mixins.scss';
 
-@include b(diary-card) {
+@include b(articles-card) {
   margin: 10px;
   padding: 12px 12px 2px 12px;
   border-radius: 8px;
@@ -33,6 +33,14 @@
     @include m(date) {
       font-size: $text-size-mini;
       color: $gray-darker-color;
+    }
+
+    @include m(actions) {
+      height: 20px;
+      width: 20px;
+      margin-left: 5px;
+      line-height: 20px;
+      font-size: $text-size-mini;
     }
   }
 

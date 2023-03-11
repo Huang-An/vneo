@@ -16,7 +16,8 @@ import {
   Checkbox,
   CellGroup,
   SwiperItem,
-  TabbarItem
+  TabbarItem,
+  ActionSheet
 } from '@nutui/nutui-taro'
 
 import type { App } from 'vue'
@@ -43,6 +44,7 @@ const setupRegisterGlobalNutui = (app: App) => {
   app.use(CellGroup)
   app.use(SwiperItem)
   app.use(TabbarItem)
+  app.use(ActionSheet)
 }
 
 /**

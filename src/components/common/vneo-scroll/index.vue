@@ -46,6 +46,8 @@ import empty from '@/assets/images/empty.png'
 
 import { cloneDeep } from 'lodash'
 import { ref, computed } from 'vue'
+import { useDidShow } from '@tarojs/taro'
+import { showLoading, hideLoading } from '@/common/toast'
 
 import type { PropType } from 'vue'
 import type { Item, PageConfig, Load } from './type'
@@ -81,7 +83,12 @@ const props = defineProps({
 
   height: {
     type: String,
-    default: 'calc(100vh - 204rpx)'
+    default: 'calc(100vh - 100rpx)'
+  },
+
+  isRefreshByShow: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -107,31 +114,42 @@ const reset = () => {
   pageConfig.value = cloneDeep(props.pageConfig)
 }
 
-// 开启 loading
-const startLoading = () => {
-  isLoading.value = true
+// 开启 refresh loading
+const startRefreshLoading = () => {
   isRefreshing.value = true
+  showLoading()
 }
 
-// 关闭 loading
+// 关闭 refresh loading
+const closeRefreshLoading = () => {
+  isRefreshing.value = false
+  hideLoading()
+}
+
+// 开启 上拉 loading
+const startLoading = () => {
+  isLoading.value = true
+}
+
+// 关闭 上拉 loading
 const closeLoading = () => {
   isLoading.value = false
-  isRefreshing.value = false
 }
 
 // 请求
 const request = async (isRefresh: boolean = false) => {
   try {
-    startLoading()
+    isRefresh ? startRefreshLoading() : startLoading()
 
     const { data } = await props.load(pageConfig.value)
 
     pageConfig.value.pageIndex++
 
     total.value = data.total
-    record.value = isRefresh ? data.items : record.value.concat(data.items)
+
+    updateRecord(isRefresh ? 'reset' : 'concat', data.items)
   } finally {
-    setTimeout(() => closeLoading(), 200)
+    setTimeout(() => (isRefresh ? closeRefreshLoading() : closeLoading()), 200)
   }
 }
 
@@ -153,6 +171,37 @@ const onRefresh = () => {
   request(true)
 }
 
+// update record
+const updateRecord = (type: 'concat' | 'reset' | 'remove', data: Item[]) => {
+  // 重置
+  if (type === 'reset') {
+    record.value = data as Item[]
+    return
+  }
+
+  // concat
+  if (type === 'concat') {
+    record.value = record.value.concat(data as Item[])
+    return
+  }
+
+  // 移除
+  if (type === 'remove') {
+    const index = record.value.indexOf(data)
+
+    if (index !== -1) {
+      record.value.splice(index, 1)
+      total.value--
+    }
+  }
+}
+
 // 初始化加载
-request()
+if (props.isRefreshByShow) {
+  useDidShow(() => onRefresh())
+} else {
+  onRefresh()
+}
+
+defineExpose({ updateRecord, onRefresh })
 </script>

@@ -12,6 +12,10 @@ const route = new Route([
     behavior: articles.add
   },
   {
+    url: '/remove',
+    behavior: articles.remove
+  },
+  {
     url: '/likeOrCollect',
     behavior: articles.likeOrCollect
   }

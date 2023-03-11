@@ -62,7 +62,7 @@ const submit = async () => {
   }
 
   try {
-    showLoading(true)
+    showLoading()
 
     let _avatar = avatar.value
 

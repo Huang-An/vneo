@@ -1,28 +1,33 @@
 <template>
-  <div class="vneo-square-card">
+  <div class="vneo-articles-card">
     <!-- head -->
-    <div class="vneo-square-card__head">
+    <div class="vneo-articles-card__head">
       <!-- 用户头像 -->
-      <image :src="currentData.avatar" mode="aspectFill" class="vneo-square-card__head--avatar" />
+      <image :src="currentData.avatar" mode="aspectFill" class="vneo-articles-card__head--avatar" />
 
       <!-- 用户信息 -->
-      <div class="vneo-square-card__head--user">
-        <div class="vneo-square-card__head--username">{{ currentData.userName }}</div>
+      <div class="vneo-articles-card__head--user">
+        <div class="vneo-articles-card__head--username">{{ currentData.userName }}</div>
 
-        <div class="vneo-square-card__head--date">{{ currentData.createDate }}</div>
+        <div class="vneo-articles-card__head--date">{{ currentData.createDate }}</div>
+      </div>
+
+      <!-- 操作栏 -->
+      <div v-if="actionList.length" class="vneo-articles-card__head--actions" @click="openActionSheet">
+        <nut-icon name="more-s" />
       </div>
     </div>
 
     <!-- body -->
-    <div class="vneo-square-card__body" @click="openArticlesDetail">
+    <div class="vneo-articles-card__body" @click="openArticlesDetail">
       <!-- 标题 -->
-      <div class="vneo-square-card__body--title">{{ currentData.title }}</div>
+      <div class="vneo-articles-card__body--title">{{ currentData.title }}</div>
 
       <!-- 内容 -->
-      <div class="vneo-square-card__body--content">{{ currentData.content }}</div>
+      <div class="vneo-articles-card__body--content">{{ currentData.content }}</div>
 
       <!-- 图片列表 -->
-      <div class="vneo-square-card__body--images">
+      <div class="vneo-articles-card__body--images">
         <div
           v-for="(item, index) in imageList"
           :key="index"
@@ -37,16 +42,16 @@
     </div>
 
     <!-- footer -->
-    <div class="vneo-square-card__footer">
+    <div v-if="isShowFooter" class="vneo-articles-card__footer">
       <!-- 收藏 -->
-      <div class="vneo-square-card__footer--item" @click.stop="collectHandler">
+      <div class="vneo-articles-card__footer--item" @click.stop="collectHandler">
         <nut-icon :class="isCollect ? 'is-active' : ''" :name="isCollect ? 'star-fill-n' : 'star-n'" />
 
         <span class="text">{{ collectCount || '' }}</span>
       </div>
 
       <!-- 点赞 -->
-      <div class="vneo-square-card__footer--item" @click.stop="likeHandler">
+      <div class="vneo-articles-card__footer--item" @click.stop="likeHandler">
         <nut-icon :class="isLike ? 'is-active' : ''" :name="isLike ? 'heart-fill' : 'heart1'" />
         <span class="text">{{ likeCount || '' }}</span>
       </div>
@@ -57,19 +62,26 @@
 <script setup lang="ts">
 import './index.scss'
 
+import { actions } from './actions'
 import { ref, computed, watch } from 'vue'
-import { previewImage } from '@tarojs/taro'
 import { likeOrCollect } from '@/api/articles'
 // import { navigateToByName } from '@/common/route'
 import { useUserStore } from '@/store/modules/user'
+import { previewImage, showActionSheet } from '@tarojs/taro'
 
 import type { PropType } from 'vue'
-
 import type { Data, ArticlesLikeOrCollectParams } from './type'
 
 const store = useUserStore()
 
+const emits = defineEmits(['remove'])
+
 const props = defineProps({
+  isShowFooter: {
+    type: Boolean,
+    default: true
+  },
+
   data: {
     required: true,
     type: Object as PropType<Data>
@@ -122,6 +134,9 @@ const likeCount = computed(() => {
   return likeOrCollectList.filter(item => item.type === 2 && item.status === 1).length
 })
 
+// 可对文章进行的操作列表
+const actionList = computed(() => actions.filter(item => item.power(currentData.value)))
+
 // 打开图片预览
 const openImagePreview = async (current: string) => {
   if (!current) return
@@ -170,6 +185,16 @@ const updateLikeOrCollectList = (params: ArticlesLikeOrCollectParams) => {
 
   // 找不到 push
   currentData.value.likeOrCollectList.push({ ...params, createUserById: store.getUserId } as any)
+}
+
+// 打开操作栏
+const openActionSheet = async () => {
+  const { tapIndex } = await showActionSheet({
+    itemList: actionList.value.map(item => item.name)
+  })
+
+  // 执行操作
+  await actionList.value[tapIndex].method(currentData.value, emits)
 }
 
 // 打开详情页

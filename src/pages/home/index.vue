@@ -26,7 +26,7 @@ import Explore from './components/explore/index.vue'
 
 import { ref } from 'vue'
 import { navigateToByName } from '@/common/route'
-import { useShareAppMessage } from '@tarojs/taro'
+import { eventCenter, useShareAppMessage } from '@tarojs/taro'
 
 const state = ref('0')
 
@@ -34,6 +34,11 @@ const state = ref('0')
 const goPublish = () => {
   navigateToByName('articles-publish')
 }
+
+// 监听 广场文章发布成功 事件
+eventCenter.on('articles-publish-by-square', () => {
+  state.value = '0'
+})
 
 useShareAppMessage(() => ({
   title: 'VNeo的广场上都有什么呢？',
