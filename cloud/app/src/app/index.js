@@ -6,7 +6,7 @@ exports.config = async () => {
     // 应用版本
     version: '1.0.6',
     // 应用首页
-    tabActiveName: 'Home',
+    tabActiveName: 'home',
     // 是否能进行文章发布
     isCanArticlesPublish: false,
     // 是否能进行文章评论
