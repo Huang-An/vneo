@@ -6,7 +6,7 @@
 
     <nut-tabs v-model="state" size="large" class="vneo-home__tabs">
       <nut-tabpane title="广 场">
-        <square v-if="!store.getIsCheck" />
+        <square v-if="!store.isCheck" />
 
         <!-- 审核时显示该版本 -->
         <explore v-else />

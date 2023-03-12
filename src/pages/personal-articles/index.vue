@@ -11,10 +11,13 @@ import VneoArticlesCard from '@/components/service/vneo-articles-card/index.vue'
 
 import { ref } from 'vue'
 import { list } from '@/api/articles'
+import { useAppStore } from '@/store/modules/app'
+import { useDidShow, setNavigationBarTitle } from '@tarojs/taro'
 
 import type { ArticlesList } from '@/api/articles/type'
 import type { PageConfig } from '@/components/common/vneo-scroll/type'
 
+const store = useAppStore()
 const scrollRef = ref<any>(null)
 
 const load = async (pageConfig: PageConfig) => {
@@ -28,4 +31,7 @@ const load = async (pageConfig: PageConfig) => {
 }
 
 const remove = (data: ArticlesList.ListItem) => scrollRef.value.updateRecord('remove', data)
+
+// 设置标题
+useDidShow(() => !store.isCheck && setNavigationBarTitle({ title: '我的文章' }))
 </script>

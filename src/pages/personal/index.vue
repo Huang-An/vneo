@@ -1,14 +1,14 @@
 <template>
   <div class="vneo-personal">
     <div class="vneo-personal__user">
-      <image :src="store.getAvatar" mode="aspectFill" class="vneo-personal__user--avatar" />
+      <image :src="userStore.getAvatar" mode="aspectFill" class="vneo-personal__user--avatar" />
 
-      <div v-if="store.getUserId" class="vneo-personal__user--username">{{ store.getUserName }}</div>
+      <div v-if="userStore.getUserId" class="vneo-personal__user--username">{{ userStore.getUserName }}</div>
 
       <div v-else class="vneo-personal__user--username" @click="goLogin">暂未登录，点击登录</div>
     </div>
 
-    <nut-cell-group class="vneo-personal__menu">
+    <nut-cell-group v-if="!appStore.isCheck" class="vneo-personal__menu">
       <nut-cell
         v-for="(item, index) in menuList"
         center
@@ -20,7 +20,7 @@
       />
     </nut-cell-group>
 
-    <nut-button v-if="store.getUserId" type="default" class="vneo-personal__loginout" @click="store.loginOut">
+    <nut-button v-if="userStore.getUserId" type="default" class="vneo-personal__loginout" @click="userStore.loginOut">
       退出登录
     </nut-button>
   </div>
@@ -32,9 +32,11 @@ import './index.scss'
 import { reactive } from 'vue'
 import { go } from '@/common/route'
 import { message } from '@/common/toast'
+import { useAppStore } from '@/store/modules/app'
 import { useUserStore } from '@/store/modules/user'
 
-const store = useUserStore()
+const appStore = useAppStore()
+const userStore = useUserStore()
 
 const menuList = reactive([
   { name: '我的文章', icon: 'category', to: 'personal-articles' },
@@ -46,7 +48,7 @@ const menuList = reactive([
 ])
 
 const goLogin = () => {
-  if (!store.getUserId) {
+  if (!userStore.getUserId) {
     go('login')
   }
 }
