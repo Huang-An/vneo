@@ -11,13 +11,15 @@ export const useAppStore = defineStore({
 
   state: (): AppConfig => {
     return {
+      isCheck: true,
       version: '1.0.6',
       tabActiveName: 'home',
-      privatePathList: ['articles-publish', 'articles-detail']
+      privatePathList: ['articles-create', 'articles-detail']
     }
   },
 
   getters: {
+    getIsCheck: state => state.isCheck,
     getVersion: state => state.version,
     getTabActiveName: state => state.tabActiveName,
     getPrivatePathList: state => state.privatePathList
@@ -26,6 +28,7 @@ export const useAppStore = defineStore({
   actions: {
     // 设置 app 配置
     setAppConfig(config: AppConfig) {
+      this.isCheck = config.isCheck
       this.version = config.version
       this.tabActiveName = config.tabActiveName
       this.privatePathList = config.privatePathList
@@ -37,9 +40,9 @@ export const useAppStore = defineStore({
 
       this.setAppConfig(data || {})
 
-      // 触发 onLoadAppConfig
+      // 重新触发 onShow
       const currentRoute = getCurrentInstance().router
-      currentRoute && eventCenter.trigger(`${currentRoute.path}.onLoadAppConfig`)
+      currentRoute && eventCenter.trigger(currentRoute.onShow)
     },
 
     async switchTab(tabActiveName: string) {

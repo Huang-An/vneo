@@ -1,4 +1,4 @@
-export const PUBLISH_CHANNEL_TYPES = [
+export const ARTICLES_CREATE_CHANNEL_TYPES = [
   {
     value: 1,
     text: '发布到广场',

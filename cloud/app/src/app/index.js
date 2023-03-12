@@ -11,12 +11,14 @@ exports.config = async () => {
   await db.add({ type: 'getAppConfig' })
 
   const config = {
+    // 是否小程序审核
+    isCheck: true,
     // 应用版本
     version: '1.0.6',
     // 应用首页
     tabActiveName: 'home',
     // 未开放页面路径
-    privatePathList: ['articles-publish', 'articles-detail']
+    privatePathList: ['articles-create', 'articles-detail']
   }
 
   return createResponeBySuccess(config)

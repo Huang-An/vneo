@@ -69,8 +69,8 @@ export const routes = [
   },
   {
     title: '发布',
-    name: 'articles-publish',
-    path: 'pages/articles-publish/index'
+    name: 'articles-create',
+    path: 'pages/articles-create/index'
   },
   {
     title: '详情',

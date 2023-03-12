@@ -31,7 +31,7 @@ const load = async (pageConfig: PageConfig) => {
 const remove = (data: ArticlesList.ListItem) => scrollRef.value.updateRecord('remove', data)
 
 // 监听 广场文章发布成功 事件
-eventCenter.on('articles-publish-by-square', () => {
+eventCenter.on('articles-create-by-square', () => {
   scrollRef.value && scrollRef.value.onRefresh()
 })
 </script>

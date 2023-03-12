@@ -1,6 +1,6 @@
 <template>
   <div class="vneo-home">
-    <div class="vneo-home__publish" @click="goPublish">
+    <div class="vneo-home__create" @click="goCreate">
       <nut-icon name="photograph" />
     </div>
 
@@ -31,12 +31,12 @@ import { eventCenter, useShareAppMessage } from '@tarojs/taro'
 const state = ref('0')
 
 // 前往文章发布
-const goPublish = () => {
-  go('articles-publish')
+const goCreate = () => {
+  go('articles-create')
 }
 
 // 监听 广场文章发布成功 事件
-eventCenter.on('articles-publish-by-square', () => {
+eventCenter.on('articles-create-by-square', () => {
   state.value = '0'
 })
 

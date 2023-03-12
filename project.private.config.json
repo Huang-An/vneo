@@ -9,7 +9,7 @@
       "list": [
         {
           "name": "",
-          "pathName": "pages/articles-publish/index",
+          "pathName": "pages/articles-create/index",
           "query": "",
           "launchMode": "default",
           "scene": null

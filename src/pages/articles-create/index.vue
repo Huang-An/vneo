@@ -1,5 +1,5 @@
 <template>
-  <div class="vneo-articles-publish">
+  <div v-if="!store.isCheck" class="vneo-articles-create">
     <vneo-select v-model="form.type" :border="false" :columns="columns" />
 
     <nut-input v-model="form.title" max-length="25" :border="false" :placeholder="columnConfig?.titlePlaceholder" />
@@ -8,12 +8,12 @@
 
     <vneo-uploader v-model="form.imageList" ref="uploaderRef" />
 
-    <div class="vneo-articles-publish__submit">
+    <div class="vneo-articles-create__submit">
       <nut-checkbox
         v-model="form.isPrivate"
         icon-size="12"
         label="匿名发布"
-        class="vneo-articles-publish__submit--private"
+        class="vneo-articles-create__submit--private"
       >
         匿名发布
       </nut-checkbox>
@@ -27,17 +27,17 @@
 import './index.scss'
 
 import { add } from '@/api/articles'
-import { eventCenter } from '@tarojs/taro'
 import { ref, reactive, computed } from 'vue'
 import { fail, success } from '@/common/toast'
 import { useAppStore } from '@/store/modules/app'
-import { PUBLISH_CHANNEL_TYPES } from '@/constant'
+import { ARTICLES_CREATE_CHANNEL_TYPES } from '@/constant'
+import { eventCenter, useDidShow, setNavigationBarTitle } from '@tarojs/taro'
 
 import type { ArticlesAdd } from '@/api/articles/type'
 
 const store = useAppStore()
 
-const columns = reactive(PUBLISH_CHANNEL_TYPES)
+const columns = reactive(ARTICLES_CREATE_CHANNEL_TYPES)
 const columnConfig = computed(() => columns.find(column => column.value === form.type))
 
 const form = reactive<ArticlesAdd.Params>({
@@ -82,7 +82,7 @@ const submitSuccess = (type: number) => {
       // 切换首页 tab
       store.goHome()
       // 触发 广场文章发布成功 事件
-      eventCenter.trigger('articles-publish-by-square')
+      eventCenter.trigger('articles-create-by-square')
       return
     }
 
@@ -90,8 +90,11 @@ const submitSuccess = (type: number) => {
       // 切换日记 tab
       store.switchTab('diary')
       // 触发 广场文章发布成功 事件
-      eventCenter.trigger('articles-publish-by-diary')
+      eventCenter.trigger('articles-create-by-diary')
     }
   }, 500)
 }
+
+// 设置标题
+useDidShow(() => !store.isCheck && setNavigationBarTitle({ title: '发布 ' }))
 </script>

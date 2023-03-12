@@ -4,7 +4,7 @@
 @include b(home) {
   position: relative;
 
-  @include e(publish) {
+  @include e(create) {
     position: absolute;
     top: 23px;
     right: 15px;

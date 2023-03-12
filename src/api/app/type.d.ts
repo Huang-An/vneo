@@ -1,4 +1,6 @@
 export type AppConfig = {
+  // 是否小程序审核
+  isCheck: boolean
   // 应用版本
   version: string
   // 应用首页
