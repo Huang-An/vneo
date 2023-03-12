@@ -9,7 +9,7 @@
       "list": [
         {
           "name": "",
-          "pathName": "pages/personal-update/index",
+          "pathName": "pages/articles-publish/index",
           "query": "",
           "launchMode": "default",
           "scene": null

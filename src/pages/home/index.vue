@@ -1,6 +1,6 @@
 <template>
   <div class="vneo-home">
-    <div v-if="store.isCanArticlesPublish" class="vneo-home__publish" @click="goPublish">
+    <div class="vneo-home__publish" @click="goPublish">
       <nut-icon name="photograph" />
     </div>
 
@@ -26,18 +26,12 @@ import Explore from './components/explore/index.vue'
 
 import { ref } from 'vue'
 import { go } from '@/common/route'
-import { useAppStore } from '@/store/modules/app'
 import { eventCenter, useShareAppMessage } from '@tarojs/taro'
 
 const state = ref('0')
-const store = useAppStore()
 
 // 前往文章发布
 const goPublish = () => {
-  if (!store.isCanArticlesPublish) {
-    return
-  }
-
   go('articles-publish')
 }
 

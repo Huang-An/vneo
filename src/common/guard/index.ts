@@ -3,14 +3,22 @@ import { setupPermissionGuard } from './permission'
 import { eventCenter, getCurrentInstance } from '@tarojs/taro'
 
 export const setupGuard = () => {
+  const guards = () => {
+    const currentRouter = getCurrentInstance().router
+
+    const path = currentRouter?.path || ''
+
+    setupPermissionGuard(path)
+  }
+
   routes.forEach(route => {
-    const eventName = `${route.path}.onShow`
+    // 页面显示时触发
+    const onShowEvent = `${route.path}.onShow`
 
-    eventCenter.on(eventName, () => {
-      const instance = getCurrentInstance()
-      const path = instance.router?.path || ''
+    // 加载app配置后触发
+    const onLoadAppConfigEvent = `/${route.path}.onLoadAppConfig`
 
-      setupPermissionGuard(path)
-    })
+    eventCenter.on(onShowEvent, () => guards())
+    eventCenter.on(onLoadAppConfigEvent, () => guards())
   })
 }

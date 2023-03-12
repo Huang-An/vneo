@@ -1,5 +1,5 @@
 <template>
-  <div v-if="store.isCanArticlesPublish" class="vneo-articles-publish">
+  <div class="vneo-articles-publish">
     <vneo-select v-model="form.type" :border="false" :columns="columns" />
 
     <nut-input v-model="form.title" max-length="25" :border="false" :placeholder="columnConfig?.titlePlaceholder" />

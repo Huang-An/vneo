@@ -1,13 +1,20 @@
 import { loginInquiry } from '@/common/helper'
-import { NO_PERMISSION_INFO } from '@/constant'
 import { routes, createTabbarList } from './routes'
 import { useUserStoreWithOut } from '@/store/modules/user'
+import { NO_PERMISSION_INFO, PRIVATE_INFO } from '@/constant'
 import { redirectTo, switchTab, navigateTo } from '@tarojs/taro'
-import { getRouteByName, getRouteByPath, isWhiteByPath, isLoginByPath, foramtPathByParams } from './helper'
+import {
+  getRouteByName,
+  getRouteByPath,
+  isWhiteByPath,
+  isLoginByPath,
+  isPrivateByPath,
+  foramtPathByParams
+} from './helper'
 
 export { routes, createTabbarList }
 
-export { getRouteByName, getRouteByPath, isWhiteByPath, isLoginByPath }
+export { getRouteByName, getRouteByPath, isWhiteByPath, isLoginByPath, isPrivateByPath }
 
 // 路由跳转
 export const go = async (
@@ -19,6 +26,11 @@ export const go = async (
   const store = useUserStoreWithOut()
 
   if (!route) return
+
+  // 不允许访问未开放页面
+  if (isPrivateByPath(route.path)) {
+    throw new Error(JSON.stringify(PRIVATE_INFO))
+  }
 
   // 如果未登录，并且不是白名单，提示先登录
   if (!store.getUserId && !isWhiteByPath(route.path)) {

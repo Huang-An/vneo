@@ -2,6 +2,7 @@ import { store } from '@/store'
 import { config } from '@/api/app'
 import { defineStore } from 'pinia'
 import { go } from '@/common/route'
+import { getCurrentInstance, eventCenter } from '@tarojs/taro'
 
 import type { AppConfig } from '@/api/app/type'
 
@@ -10,20 +11,16 @@ export const useAppStore = defineStore({
 
   state: (): AppConfig => {
     return {
-      version: '',
+      version: '1.0.6',
       tabActiveName: 'home',
-      isCanArticlesPublish: false,
-      isCanArticlesComment: false,
-      isCanArticlesDetails: false
+      privatePathList: ['articles-publish', 'articles-detail']
     }
   },
 
   getters: {
     getVersion: state => state.version,
     getTabActiveName: state => state.tabActiveName,
-    getIsCanArticlesPublish: state => state.isCanArticlesPublish,
-    getIsCanArticlesComment: state => state.isCanArticlesComment,
-    getIsCanArticlesDetails: state => state.isCanArticlesDetails
+    getPrivatePathList: state => state.privatePathList
   },
 
   actions: {
@@ -31,9 +28,7 @@ export const useAppStore = defineStore({
     setAppConfig(config: AppConfig) {
       this.version = config.version
       this.tabActiveName = config.tabActiveName
-      this.isCanArticlesPublish = config.isCanArticlesPublish
-      this.isCanArticlesComment = config.isCanArticlesComment
-      this.isCanArticlesDetails = config.isCanArticlesDetails
+      this.privatePathList = config.privatePathList
     },
 
     // 加载 app 配置
@@ -41,16 +36,16 @@ export const useAppStore = defineStore({
       const { data } = await config()
 
       this.setAppConfig(data || {})
-    },
 
-    setTabActiveName(tabActiveName: string) {
-      this.tabActiveName = tabActiveName
+      // 触发 onLoadAppConfig
+      const currentRoute = getCurrentInstance().router
+      currentRoute && eventCenter.trigger(`${currentRoute.path}.onLoadAppConfig`)
     },
 
     async switchTab(tabActiveName: string) {
       await go(tabActiveName, 'switchTab')
 
-      this.setTabActiveName(tabActiveName)
+      this.tabActiveName = tabActiveName
     },
 
     // 前往首页

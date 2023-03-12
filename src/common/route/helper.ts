@@ -1,5 +1,6 @@
 // 根据名称获取路由配置
 import { routes } from './routes'
+import { useAppStoreWithOut } from '@/store/modules/app'
 
 // 根据名称 获取路由
 export const getRouteByName = (name: string) => {
@@ -25,6 +26,16 @@ export const isLoginByPath = (path: string) => {
   const route = getRouteByPath(path)
 
   return route && route.meta && route.meta.isLogin
+}
+
+// 根据路径 判断是否是未开放页面
+export const isPrivateByPath = (path: string) => {
+  const store = useAppStoreWithOut()
+  const route = getRouteByPath(path)
+
+  if (!route) return true
+
+  return store.getPrivatePathList.includes(route.name)
 }
 
 // 处理参数路径

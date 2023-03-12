@@ -7,12 +7,8 @@ exports.config = async () => {
     version: '1.0.6',
     // 应用首页
     tabActiveName: 'home',
-    // 是否能进行文章发布
-    isCanArticlesPublish: false,
-    // 是否能进行文章评论
-    isCanArticlesComment: false,
-    // 是否能进入文章详情页
-    isCanArticlesDetails: false
+    // 未开放页面路径
+    privatePathList: ['articles-publish', 'articles-detail']
   }
 
   return createResponeBySuccess(config)
