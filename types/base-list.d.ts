@@ -42,17 +42,7 @@ type BaseListItem = {
   /**
    * 更新人
    */
-  createUserByName: string
-
-  /**
-   * 更新人
-   */
   updateUserById: string
-
-  /**
-   * 更新人
-   */
-  updateUserByName: string
 }
 
 /**

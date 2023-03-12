@@ -4,39 +4,36 @@ import { defineStore } from 'pinia'
 import { go } from '@/common/route'
 import { getCurrentInstance, eventCenter } from '@tarojs/taro'
 
-import type { AppConfig } from '@/api/app/type'
+import type { AppConfigResponse } from '@/api/app/type'
 
 export const useAppStore = defineStore({
   id: 'app',
 
-  state: (): AppConfig => {
+  state: (): AppConfigResponse => {
     return {
       isCheck: true,
       version: '1.0.6',
-      tabActiveName: 'home',
-      privatePathList: []
+      tabActiveName: 'home'
     }
   },
 
   getters: {
     getIsCheck: state => state.isCheck,
     getVersion: state => state.version,
-    getTabActiveName: state => state.tabActiveName,
-    getPrivatePathList: state => state.privatePathList
+    getTabActiveName: state => state.tabActiveName
   },
 
   actions: {
     // 设置 app 配置
-    setAppConfig(config: AppConfig) {
+    setAppConfig(config: AppConfigResponse) {
       this.isCheck = config.isCheck
       this.version = config.version
       this.tabActiveName = config.tabActiveName
-      this.privatePathList = config.privatePathList
     },
 
     // 加载 app 配置
     async loadAppConfig() {
-      const { data } = await config()
+      const { data } = await config({ version: this.version })
 
       this.setAppConfig(data || {})
 

@@ -6,7 +6,10 @@
 
     <nut-tabs v-model="state" size="large" class="vneo-home__tabs">
       <nut-tabpane title="广 场">
-        <square />
+        <square v-if="!store.getIsCheck" />
+
+        <!-- 审核时显示该版本 -->
+        <square-default v-else />
       </nut-tabpane>
 
       <nut-tabpane title="探 索">
@@ -23,12 +26,15 @@ import FleaMarket from '@/assets/images/flea-market.png'
 
 import Square from './components/square/index.vue'
 import Explore from './components/explore/index.vue'
+import SquareDefault from './components/square-default/index.vue'
 
 import { ref } from 'vue'
 import { go } from '@/common/route'
+import { useAppStore } from '@/store/modules/app'
 import { eventCenter, useShareAppMessage } from '@tarojs/taro'
 
 const state = ref('0')
+const store = useAppStore()
 
 // 前往文章发布
 const goCreate = () => {

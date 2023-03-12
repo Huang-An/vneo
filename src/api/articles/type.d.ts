@@ -5,7 +5,7 @@ export namespace ArticlesList {
     userName: string
     title: string
     content: string
-    isPrivate: boolean
+    isPrivate?: boolean
     imageList: string[]
     likeOrCollectList: Array<BaseListItem & ArticlesLikeOrCollect.Params>
   }

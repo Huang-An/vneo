@@ -28,16 +28,6 @@ export const isLoginByPath = (path: string) => {
   return route && route.meta && route.meta.isLogin
 }
 
-// 根据路径 判断是否是未开放页面
-export const isPrivateByPath = (path: string) => {
-  const store = useAppStoreWithOut()
-  const route = getRouteByPath(path)
-
-  if (!route) return true
-
-  return store.getPrivatePathList.includes(route.name)
-}
-
 // 处理参数路径
 export const foramtPathByParams = (path: string, params: Record<string, any> = {}) => {
   let param = Object.keys(params)

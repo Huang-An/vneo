@@ -10,9 +10,6 @@ export const ERROR_CODE = 500
 // 未登录
 export const NO_PERMISSION_CODE = 401
 
-// 未开放
-export const PRIVATE_CODE = 403
-
 // 默认错误信息
 export const ERROR_INFO = {
   code: ERROR_CODE,
@@ -24,13 +21,6 @@ export const ERROR_INFO = {
 export const NO_PERMISSION_INFO = {
   code: NO_PERMISSION_CODE,
   msg: '请先登录~',
-  data: null
-}
-
-// 未开放
-export const PRIVATE_INFO = {
-  code: PRIVATE_CODE,
-  msg: '未开放~',
   data: null
 }
 
