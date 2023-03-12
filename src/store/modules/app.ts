@@ -14,7 +14,7 @@ export const useAppStore = defineStore({
       isCheck: true,
       version: '1.0.6',
       tabActiveName: 'home',
-      privatePathList: ['articles-create', 'articles-detail']
+      privatePathList: []
     }
   },
 
