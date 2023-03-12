@@ -11,7 +11,7 @@ export const actions = [
     // 显示权限
     power: (data: Data) => {
       const store = useUserStoreWithOut()
-      return store.getUserId === data.createUserById
+      return store.getUserId && store.getUserId === data.createUserById
     },
 
     // 操作方法

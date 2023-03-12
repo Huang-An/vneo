@@ -1,6 +1,6 @@
 <template>
   <div class="vneo-square-default">
-    <vneo-articles-card v-for="(item, index) in list" :key="index" :data="item" />
+    <vneo-articles-card v-for="(item, index) in list" :key="index" :data="item" :is-show-footer="false" />
   </div>
 </template>
 
@@ -13,14 +13,14 @@ import { ref } from 'vue'
 
 const list = ref([
   {
-    _id: 'a31a2188640c791a000ece5a6cf7ace8',
+    _id: '1',
     avatar:
       'cloud://vneo-test-4g35fcfw4fde9750.766e-vneo-test-4g35fcfw4fde9750-1258026426/tmp_abbf4de33bd67955a53a46f69a6f74c2dd4e359f9e9b7515.jpg',
     userName: '桉。',
     createDate: '2023-03-11T12:50:34.000Z',
     updateDate: '2023-03-11T12:50:34.000Z',
-    createUserById: 'oSK4G0UvwFQ-w08vU2K2YEWeh4qs',
-    updateUserById: 'oSK4G0UvwFQ-w08vU2K2YEWeh4qs',
+    createUserById: '',
+    updateUserById: '',
     content: '你有多久没有超进化了！？',
     imageList: [
       'cloud://vneo-test-4g35fcfw4fde9750.766e-vneo-test-4g35fcfw4fde9750-1258026426/tmp_9e0dd2ae124f87271ca42c94059f3701d7cffa5ff18781d8.jpg',
@@ -33,14 +33,14 @@ const list = ref([
     likeOrCollectList: []
   },
   {
-    _id: 'fc8e6465640c78d003f74549491e83fe',
+    _id: '2',
     avatar:
       'cloud://vneo-test-4g35fcfw4fde9750.766e-vneo-test-4g35fcfw4fde9750-1258026426/tmp_abbf4de33bd67955a53a46f69a6f74c2dd4e359f9e9b7515.jpg',
     userName: '桉。',
     createDate: '2023-03-11T12:49:20.234Z',
     updateDate: '2023-03-11T12:49:20.234Z',
-    createUserById: 'oSK4G0UvwFQ-w08vU2K2YEWeh4qs',
-    updateUserById: 'oSK4G0UvwFQ-w08vU2K2YEWeh4qs',
+    createUserById: '',
+    updateUserById: '',
     content: '😃😃😃😃😃',
     imageList: [
       'cloud://vneo-test-4g35fcfw4fde9750.766e-vneo-test-4g35fcfw4fde9750-1258026426/tmp_0083279aa2471280b4c91afb42caf99258bc791d59abe995.jpg',
@@ -53,14 +53,14 @@ const list = ref([
     likeOrCollectList: []
   },
   {
-    _id: '2cc84e26640c788d03ff423152094d91',
+    _id: '3',
     avatar:
       'cloud://vneo-test-4g35fcfw4fde9750.766e-vneo-test-4g35fcfw4fde9750-1258026426/tmp_abbf4de33bd67955a53a46f69a6f74c2dd4e359f9e9b7515.jpg',
     userName: '桉。',
     createDate: '2023-03-11T12:48:13.571Z',
     updateDate: '2023-03-11T12:48:13.571Z',
-    createUserById: 'oSK4G0UvwFQ-w08vU2K2YEWeh4qs',
-    updateUserById: 'oSK4G0UvwFQ-w08vU2K2YEWeh4qs',
+    createUserById: '',
+    updateUserById: '',
     content: '😏😏😏😏😏',
     imageList: [
       'cloud://vneo-test-4g35fcfw4fde9750.766e-vneo-test-4g35fcfw4fde9750-1258026426/tmp_9bc49058e6bdcbad5b11232fee07d3a5d738c3970d5a90af.gif',
@@ -72,14 +72,14 @@ const list = ref([
     likeOrCollectList: []
   },
   {
-    _id: 'a31a2188640c5fbf000c48af491fe9d5',
+    _id: '4',
     avatar:
       'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0',
     userName: '爱如火',
     createDate: '2023-03-11T11:02:23.083Z',
     updateDate: '2023-03-11T11:02:23.083Z',
-    createUserById: 'oSK4G0SKRNwbSp0vp7fjClv5wTnM',
-    updateUserById: 'oSK4G0SKRNwbSp0vp7fjClv5wTnM',
+    createUserById: '',
+    updateUserById: '',
     content:
       '\n两年之后的一天晚上，你在玩路人局，无意中看见有个队友在用怜悯之刃，你越看越帅，游戏结束了你都久久不能忘怀，半夜睡觉翻来覆去满脑子都是它的画面，天亮了，你还是不能入睡，不停的抽自己耳光，痛哭流涕。这全都是因为两年前的今天，你没有购买怜悯之刃',
     imageList: [
