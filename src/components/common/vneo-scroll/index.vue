@@ -197,17 +197,12 @@ const updateRecord = (type: 'concat' | 'reset' | 'remove', data: Item[]) => {
 }
 
 const start = () => {
-  const process = () => {
-    reset()
-    request(true)
-  }
-
   if (props.isRefreshByShow) {
-    useDidShow(() => process())
+    useDidShow(() => onRefresh())
     return
   }
 
-  process()
+  onRefresh()
 }
 
 start()

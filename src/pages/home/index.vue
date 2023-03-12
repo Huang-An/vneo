@@ -9,7 +9,7 @@
         <square v-if="!store.getIsCheck" />
 
         <!-- 审核时显示该版本 -->
-        <square-default v-else />
+        <explore v-else />
       </nut-tabpane>
 
       <nut-tabpane title="探 索">
@@ -26,7 +26,6 @@ import FleaMarket from '@/assets/images/flea-market.png'
 
 import Square from './components/square/index.vue'
 import Explore from './components/explore/index.vue'
-import SquareDefault from './components/square-default/index.vue'
 
 import { ref } from 'vue'
 import { go } from '@/common/route'

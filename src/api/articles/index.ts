@@ -1,6 +1,12 @@
 import { callFunction } from '@/common/cloud-function'
 
-import type { ArticlesList, ArticlesAdd, ArticlesRemove, ArticlesLikeOrCollect } from './type'
+import type {
+  ArticlesList,
+  ArticlesAdd,
+  ArticlesRemove,
+  ArticlesLikeOrCollect,
+  ArticlesListByLikeOrCollect
+} from './type'
 
 const BASE_URL = 'articles'
 
@@ -19,3 +25,7 @@ export const remove = async (params: ArticlesRemove.Params) =>
 // 点赞收藏
 export const likeOrCollect = async (params: ArticlesLikeOrCollect.Params) =>
   await callFunction<ArticlesLikeOrCollect.Response>(`${BASE_URL}/likeOrCollect`, params)
+
+// 点赞收藏
+export const listByLikeOrCollect = async (params: ArticlesListByLikeOrCollect.Params) =>
+  await callFunction<ArticlesListByLikeOrCollect.Response>(`${BASE_URL}/listByLikeOrCollect`, params)

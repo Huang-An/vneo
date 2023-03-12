@@ -68,6 +68,16 @@ export const routes = [
     path: 'pages/personal-articles/index'
   },
   {
+    title: '我的收藏',
+    name: 'personal-collect',
+    path: 'pages/personal-collect/index'
+  },
+  {
+    title: '我的点赞',
+    name: 'personal-likes',
+    path: 'pages/personal-likes/index'
+  },
+  {
     title: '发布',
     name: 'articles-create',
     path: 'pages/articles-create/index'

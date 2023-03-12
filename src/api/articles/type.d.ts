@@ -55,3 +55,23 @@ export namespace ArticlesLikeOrCollect {
 
   type Response = boolean
 }
+
+// listByLikeOrCollect
+export namespace ArticlesListByLikeOrCollect {
+  type ListItem = BaseListItem & {
+    avatar: string
+    userName: string
+    title: string
+    content: string
+    isPrivate?: boolean
+    imageList: string[]
+    likeOrCollectList: Array<BaseListItem & ArticlesLikeOrCollect.Params>
+  }
+
+  type Params = BaseListParams<{
+    // 1 collect 、2 like
+    type: 1 | 2
+  }>
+
+  type Response = BaseListResponse<ListItem>
+}

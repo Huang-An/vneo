@@ -18,6 +18,10 @@ const route = new Route([
   {
     url: '/likeOrCollect',
     behavior: articles.likeOrCollect
+  },
+  {
+    url: '/listByLikeOrCollect',
+    behavior: articles.listByLikeOrCollect
   }
 ])
 
