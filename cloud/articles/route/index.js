@@ -16,12 +16,8 @@ const route = new Route([
     behavior: articles.remove
   },
   {
-    url: '/likeOrCollect',
-    behavior: articles.likeOrCollect
-  },
-  {
-    url: '/listByLikeOrCollect',
-    behavior: articles.listByLikeOrCollect
+    url: '/details',
+    behavior: articles.details
   }
 ])
 

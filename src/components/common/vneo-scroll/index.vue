@@ -9,16 +9,13 @@
       @scrolltolower="onLoad"
       @refresherRefresh="onRefresh"
     >
-      <slot v-for="(item, index) in record" :key="index" :item="item" />
+      <slot name="pre" />
 
-      <!-- 空数据清空省缺 -->
-      <div v-if="!record.length" class="vneo-scroll__empty">
-        <image :src="empty" class="vneo-scroll__empty--img" />
+      <slot v-for="(item, index) in record" :key="item._id || index" :item="item" />
 
-        <div class="vneo-scroll__empty--tips">
-          {{ emptyText }}
-        </div>
-      </div>
+      <slot v-if="!record.length" name="empty">
+        <vneo-empty :empty-text="emptyText" />
+      </slot>
 
       <!-- 非空数据省缺 -->
       <div v-else class="vneo-scroll__lower">
@@ -42,7 +39,6 @@ export default {
 
 <script setup lang="ts">
 import './index.scss'
-import empty from '@/assets/images/empty.png'
 
 import { cloneDeep } from 'lodash'
 import { ref, computed } from 'vue'
@@ -77,7 +73,6 @@ const props = defineProps({
   },
 
   load: {
-    required: true,
     type: Function as PropType<Load>
   },
 
@@ -138,6 +133,10 @@ const closeLoading = () => {
 
 // 请求
 const request = async (isRefresh: boolean = false) => {
+  if (!props.load) {
+    return
+  }
+
   try {
     isRefresh ? startRefreshLoading() : startLoading()
 

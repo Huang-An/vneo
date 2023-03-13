@@ -1,3 +1,5 @@
+import { ArticlesLikeCollectParams } from '../articles-like-collect/type'
+
 // 列表
 export namespace ArticlesList {
   type ListItem = BaseListItem & {
@@ -7,7 +9,7 @@ export namespace ArticlesList {
     content: string
     isPrivate?: boolean
     imageList: string[]
-    likeOrCollectList: Array<BaseListItem & ArticlesLikeOrCollect.Params>
+    likeCollectList: Array<BaseListItem & ArticlesLikeCollectParams>
   }
 
   type Params = BaseListParams<{
@@ -42,36 +44,11 @@ export namespace ArticlesRemove {
   type Response = boolean
 }
 
-// 点赞收藏
-export namespace ArticlesLikeOrCollect {
+// 删除
+export namespace ArticlesDetails {
   type Params = {
-    // 文章 id
-    articlesId: string
-    // 1 collect 、2 like
-    type: 1 | 2
-    // 0 失效、1 生效
-    status: number
+    _id: string
   }
 
-  type Response = boolean
-}
-
-// listByLikeOrCollect
-export namespace ArticlesListByLikeOrCollect {
-  type ListItem = BaseListItem & {
-    avatar: string
-    userName: string
-    title: string
-    content: string
-    isPrivate?: boolean
-    imageList: string[]
-    likeOrCollectList: Array<BaseListItem & ArticlesLikeOrCollect.Params>
-  }
-
-  type Params = BaseListParams<{
-    // 1 collect 、2 like
-    type: 1 | 2
-  }>
-
-  type Response = BaseListResponse<ListItem>
+  type Response = ArticlesList.ListItem
 }

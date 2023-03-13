@@ -1,0 +1,19 @@
+@import '@/assets/styles/common/var.scss';
+@import '@/assets/styles/mixins/mixins.scss';
+
+@include b(empty) {
+  overflow: hidden;
+
+  @include e(img) {
+    display: block;
+    width: 315px;
+    height: 315px;
+    margin: 30px auto 10px;
+  }
+
+  @include e(tips) {
+    text-align: center;
+    color: $gray-darker-color;
+    font-size: $text-size-medium;
+  }
+}

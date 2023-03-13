@@ -1,7 +1,7 @@
 <template>
   <vneo-scroll ref="scrollRef" :load="load" is-refresh-by-show>
     <template #default="{ item }: { item: ArticlesList.ListItem }">
-      <vneo-articles-card :data="item" :is-show-footer="false" @remove="remove(item)" />
+      <vneo-articles-card :data="item" @remove="remove(item)" />
     </template>
   </vneo-scroll>
 </template>
@@ -11,7 +11,7 @@ import VneoArticlesCard from '@/components/service/vneo-articles-card/index.vue'
 
 import { ref } from 'vue'
 import { useAppStore } from '@/store/modules/app'
-import { listByLikeOrCollect } from '@/api/articles'
+import { list } from '@/api/articles-like-collect'
 import { useDidShow, setNavigationBarTitle } from '@tarojs/taro'
 
 import type { ArticlesList } from '@/api/articles/type'
@@ -20,7 +20,7 @@ import type { PageConfig } from '@/components/common/vneo-scroll/type'
 const store = useAppStore()
 const scrollRef = ref<any>(null)
 
-const load = async (pageConfig: PageConfig) => await listByLikeOrCollect({ ...pageConfig, search: { type: 2 } })
+const load = async (pageConfig: PageConfig) => await list({ ...pageConfig, search: { type: 2 } })
 
 const remove = (data: ArticlesList.ListItem) => scrollRef.value.updateRecord('remove', data)
 

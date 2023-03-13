@@ -29,21 +29,4 @@
       }
     }
   }
-
-  @include e(empty) {
-    overflow: hidden;
-
-    @include m(img) {
-      display: block;
-      width: 315px;
-      height: 315px;
-      margin: 30px auto 10px;
-    }
-
-    @include m(tips) {
-      text-align: center;
-      color: $gray-darker-color;
-      font-size: $text-size-medium;
-    }
-  }
 }
