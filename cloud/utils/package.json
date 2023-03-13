@@ -1,7 +1,7 @@
 {
   "name": "@vneo/cloud-utils",
   "license": "ISC",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "author": "Huang-An",
   "description": "vneo cloud utils",
   "main": "index.js",

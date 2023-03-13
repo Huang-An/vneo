@@ -103,7 +103,7 @@ importers:
 
   cloud/app:
     specifiers:
-      '@vneo/cloud-utils': ^1.0.6
+      '@vneo/cloud-utils': ^1.0.7
       wx-server-sdk: ~2.6.3
     dependencies:
       '@vneo/cloud-utils': link:../utils
@@ -111,7 +111,7 @@ importers:
 
   cloud/articles:
     specifiers:
-      '@vneo/cloud-utils': ^1.0.6
+      '@vneo/cloud-utils': ^1.0.7
       wx-server-sdk: ~2.6.3
     dependencies:
       '@vneo/cloud-utils': link:../utils
@@ -119,7 +119,7 @@ importers:
 
   cloud/articles-like-collect:
     specifiers:
-      '@vneo/cloud-utils': ^1.0.6
+      '@vneo/cloud-utils': ^1.0.7
       wx-server-sdk: ~2.6.3
     dependencies:
       '@vneo/cloud-utils': link:../utils
@@ -127,7 +127,7 @@ importers:
 
   cloud/user:
     specifiers:
-      '@vneo/cloud-utils': ^1.0.6
+      '@vneo/cloud-utils': ^1.0.7
       wx-server-sdk: ~2.6.3
     dependencies:
       '@vneo/cloud-utils': link:../utils
