@@ -11,20 +11,15 @@
 <script setup lang="ts">
 import './index.scss'
 
-import club from '@/assets/images/club.png'
 import todoList from '@/assets/images/todo-list.png'
-import fleaMarket from '@/assets/images/flea-market.png'
 import timeCapsule from '@/assets/images/time-capsule.png'
-import coupleSpace from '@/assets/images/couple-space.png'
 
 import { reactive } from 'vue'
 import { message } from '@/common/toast'
 
 const appList = reactive([
-  { name: '时间胶囊', icon: timeCapsule },
-  { name: 'TODOLIST', icon: todoList },
-  { name: '情侣空间', icon: coupleSpace },
-  { name: '俱乐部', icon: club }
+  { name: '代办事项', icon: todoList },
+  { name: '时间胶囊', icon: timeCapsule }
 ])
 
 const openNewApp = (name: string) => {
