@@ -1,7 +1,7 @@
 {
   "name": "@vneo/cloud-app",
   "license": "ISC",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "author": "Huang-An",
   "description": "vneo cloud app api",
   "main": "index.js",

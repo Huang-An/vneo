@@ -9,7 +9,7 @@ exports.config = async params => {
     // 是否小程序审核
     isCheck: true,
     // 当前版本
-    version: '1.0.7',
+    version: '1.0.8',
     // 应用首页
     tabActiveName: 'home'
   }

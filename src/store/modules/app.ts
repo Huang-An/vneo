@@ -12,7 +12,7 @@ export const useAppStore = defineStore({
   state: (): AppConfigResponse => {
     return {
       isCheck: true,
-      version: '1.0.7',
+      version: '1.0.8',
       tabActiveName: 'home'
     }
   },

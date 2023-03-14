@@ -1,7 +1,7 @@
 {
   "name": "@vneo/cloud-articles-like-collect",
   "license": "ISC",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "author": "Huang-An",
   "description": "vneo cloud articles-like-collect api",
   "main": "index.js",
