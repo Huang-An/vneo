@@ -78,12 +78,14 @@ exports.add = async params => {
 exports.remove = async params => {
   const articlesDb = new Database(cloud.database(), 'articles')
   const articlesLikeCollectDb = new Database(cloud.database(), 'articles-like-collect')
+  const articlesCommentDb = new Database(cloud.database(), 'articles-comment')
 
   if (!params._id) {
     return createResponeByError()
   }
 
   await articlesDb.remove(params)
+  await articlesCommentDb.remove({ articlesId: params._id })
   await articlesLikeCollectDb.remove({ articlesId: params._id })
 
   return createResponeBySuccess(true)

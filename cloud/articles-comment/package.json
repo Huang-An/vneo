@@ -1,0 +1,12 @@
+{
+  "name": "@vneo/cloud-articles-comment",
+  "license": "ISC",
+  "version": "1.0.7",
+  "author": "Huang-An",
+  "description": "vneo cloud articles-comment api",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3",
+    "@vneo/cloud-utils": "^1.0.7"
+  }
+}

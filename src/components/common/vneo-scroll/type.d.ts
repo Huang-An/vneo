@@ -12,7 +12,8 @@ export type VneoScroll = VneoComponent<{
   finishedText?: string
   emptyText?: string
   height?: string
-  load?: Load
+  backgroundColor?: string
+  load: Load
   // 是否每次进入页面都要刷新列表
   isRefreshByShow?: boolean
 }>

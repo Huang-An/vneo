@@ -1,0 +1,73 @@
+@import '@/assets/styles/common/var.scss';
+@import '@/assets/styles/mixins/mixins.scss';
+
+@include b(comment-card) {
+  padding: 15px 16px 0;
+  background: $white-color;
+
+  @include e(head) {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+
+    @include m(avatar) {
+      flex: 0 0 36px;
+      width: 36px;
+      height: 36px;
+      border: $border;
+      border-radius: 8px;
+    }
+
+    @include m(username) {
+      flex: 1;
+      margin-left: 10px;
+      font-size: $text-size-mini;
+    }
+
+    @include m(actions) {
+      height: 20px;
+      width: 20px;
+      margin-left: 5px;
+      line-height: 20px;
+      font-size: $text-size-mini;
+    }
+  }
+
+  @include e(body) {
+    margin-left: 46px;
+    box-sizing: border-box;
+
+    @include m(content) {
+      margin-bottom: 10px;
+      font-size: $text-size-medium;
+    }
+
+    @include m(image) {
+      width: 100%;
+      margin-bottom: 10px;
+
+      image {
+        width: 100%;
+      }
+    }
+  }
+
+  @include e(footer) {
+    margin-left: 46px;
+    padding-bottom: 15px;
+    border-bottom: $border;
+    font-size: $text-size-mini;
+    color: $gray-darker-color;
+
+    @include m(index) {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+
+    @include m(date) {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+}

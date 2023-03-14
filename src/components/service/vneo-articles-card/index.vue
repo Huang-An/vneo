@@ -62,17 +62,17 @@
 <script setup lang="ts">
 import './index.scss'
 
-import userInit from './userInit'
-import imageInit from './imageInit'
-import actionsInit from './actionsInit'
-import operateInit from './operateInit'
+import userInit from '../details-common/userInit'
+import imageInit from '../details-common/imageInit'
+import actionsInit from '../details-common/actionsInit'
+import operateInit from '../details-common/operateInit'
 
 import { ref, watch } from 'vue'
 import { go } from '@/common/route'
 import { format } from '@/common/helper'
 
-import type { Data } from './type'
 import type { PropType } from 'vue'
+import type { Data } from '../details-common/type'
 
 const emits = defineEmits(['remove'])
 
@@ -114,7 +114,7 @@ const { isCollect, collectCount, isLike, likeCount, likeCollectHandler } = opera
 const openArticlesDetail = () => {
   go('articles-detail', 'navigateTo', {
     params: {
-      _id: currentData.value._id
+      articlesId: currentData.value._id
     }
   })
 }

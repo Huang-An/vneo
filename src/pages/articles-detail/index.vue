@@ -1,102 +1,79 @@
 <template>
-  <div>
-    <vneo-scroll v-if="currentData._id">
+  <div v-if="currentData.title">
+    <vneo-scroll ref="scrollRef" finished-text="暂无更多评论，点击刷新" background-color="#fff" :load="requestComment">
       <template #pre>
-        <div class="vneo-articles-detail">
-          <!-- 用户信息 -->
-          <div class="vneo-articles-detail__user">
-            <!-- 用户头像 -->
-            <image :src="avatar" mode="aspectFill" class="vneo-articles-detail__user--avatar" />
+        <vneo-articles-details :data="currentData" />
 
-            <!-- 用户信息 -->
-            <div class="vneo-articles-detail__user--userinfo">
-              <div class="vneo-articles-detail__user--username">{{ userName }}</div>
-
-              <div class="vneo-articles-detail__user--date">{{ format(currentData.createDate) }}</div>
-            </div>
-          </div>
-
-          <!-- body -->
-          <div class="vneo-articles-detail__body">
-            <!-- 标题 -->
-            <div class="vneo-articles-detail__body--title">{{ currentData.title }}</div>
-
-            <!-- 内容 -->
-            <div class="vneo-articles-detail__body--content">{{ currentData.content }}</div>
-
-            <!-- 图片列表 -->
-            <div
-              v-for="(item, index) in currentData.imageList"
-              :key="index"
-              :src="item"
-              class="vneo-articles-detail__body--image"
-              @click.stop="openImagePreview(item)"
-            >
-              <image :src="item" mode="aspectFill" />
-            </div>
-          </div>
-
-          <!-- footer -->
-          <div class="vneo-articles-detail__footer">
-            <!-- 收藏 -->
-            <div class="vneo-articles-detail__footer--item" @click.stop="likeCollectHandler(1, isCollect)">
-              <nut-icon :class="isCollect ? 'is-active' : ''" :name="isCollect ? 'star-fill-n' : 'star-n'" />
-
-              <span class="text">{{ collectCount || '' }}</span>
-            </div>
-
-            <!-- 点赞 -->
-            <div class="vneo-articles-detail__footer--item" @click.stop="likeCollectHandler(2, isLike)">
-              <nut-icon :class="isLike ? 'is-active' : ''" :name="isLike ? 'heart-fill' : 'heart1'" />
-              <span class="text">{{ likeCount || '' }}</span>
-            </div>
-          </div>
+        <div class="vneo-comment__title">
+          <div class="vneo-comment__title--text">全部评论：</div>
         </div>
-
-        <div class="vneo-comment__title">全部回复：</div>
       </template>
 
       <template #empty>
-        <div class="vneo-comment__empty">暂无评论</div>
+        <div class="vneo-comment__empty">暂无评论，快去发表吧~</div>
+      </template>
+
+      <template #default="{ index, item }">
+        <vneo-comment-card :index="index" :data="item" @remove="remove(item)" />
       </template>
     </vneo-scroll>
 
-    <vneo-empty v-else />
+    <vneo-comment-input :articles-id="currentData._id" />
   </div>
+
+  <vneo-empty v-else />
 </template>
 
 <script setup lang="ts">
 import './index.scss'
 
-import userInit from '@/components/service/vneo-articles-card/userInit'
-import imageInit from '@/components/service/vneo-articles-card/imageInit'
-import operateInit from '@/components/service/vneo-articles-card/operateInit'
+import VneoCommentCard from '@/components/service/vneo-comment-card/index.vue'
+import VneoCommentInput from '@/components/service/vneo-comment-input/index.vue'
+import VneoArticlesDetails from '@/components/service/vneo-articles-details/index.vue'
 
 import { ref } from 'vue'
-import { useLoad } from '@tarojs/taro'
-import { format } from '@/common/helper'
 import { details } from '@/api/articles'
+import { list } from '@/api/articles-comment'
+import { useLoad, useShareAppMessage } from '@tarojs/taro'
 
-import type { Data } from '@/components/service/vneo-articles-card/type'
+import type { ArticlesDetails } from '@/api/articles/type'
+import type { ArticlesCommentList } from '@/api/articles-comment/type'
+import type { PageConfig } from '@/components/common/vneo-scroll/type'
 
-const currentData = ref<Data>({
+const scrollRef = ref<any>(null)
+
+const currentData = ref<ArticlesDetails.Response>({
   likeCollectList: []
 } as any)
 
-// user init
-const { userName, avatar } = userInit(currentData)
+// 请求详情
+const requestDetails = async (articlesId: string) => {
+  if (!articlesId) return
 
-// image init
-const { openImagePreview } = imageInit(currentData)
-
-// operate init
-const { isCollect, collectCount, isLike, likeCount, likeCollectHandler } = operateInit(currentData)
-
-useLoad(async ({ _id }) => {
-  if (!_id) return
-
-  const { data } = await details({ _id })
+  const { data } = await details({ _id: articlesId })
 
   currentData.value = data
+}
+
+// 请求评论数据
+const requestComment = async (pageConfig: PageConfig) => {
+  return await list({
+    ...pageConfig,
+    search: {
+      articlesId: currentData.value._id
+    }
+  })
+}
+
+const remove = (data: ArticlesCommentList.ListItem) => scrollRef.value.updateRecord('remove', data)
+
+useLoad(async ({ articlesId }) => {
+  currentData.value._id = articlesId
+
+  await requestDetails(articlesId)
 })
+
+useShareAppMessage(() => ({
+  title: currentData.value.title || ''
+}))
 </script>

@@ -1,6 +1,5 @@
 // 根据名称获取路由配置
 import { routes } from './routes'
-import { useAppStoreWithOut } from '@/store/modules/app'
 
 // 根据名称 获取路由
 export const getRouteByName = (name: string) => {

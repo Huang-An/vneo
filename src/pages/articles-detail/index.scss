@@ -1,99 +1,17 @@
 @import '@/assets/styles/common/var.scss';
 @import '@/assets/styles/mixins/mixins.scss';
 
-@include b(articles-detail) {
-  padding: 10px 16px;
-  background: $white-color;
-
-  @include e(user) {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-
-    @include m(avatar) {
-      flex: 0 0 36px;
-      width: 36px;
-      height: 36px;
-      border: $border;
-      border-radius: 8px;
-    }
-
-    @include m(userinfo) {
-      flex: 1;
-      margin-left: 10px;
-    }
-
-    @include m(username) {
-      margin-bottom: 5px;
-      font-size: $text-size-mini;
-    }
-
-    @include m(date) {
-      font-size: $text-size-mini;
-      color: $gray-darker-color;
-    }
-  }
-
-  @include e(body) {
-    @include m(title) {
-      margin-bottom: 10px;
-      font-size: $text-size-large;
-      font-weight: $font-weight-medium;
-    }
-
-    @include m(content) {
-      margin-bottom: 10px;
-      font-size: $text-size-medium;
-    }
-
-    @include m(image) {
-      width: 100%;
-      border: 8px;
-      margin-top: 10px;
-
-      image {
-        width: 100%;
-        border: 8px;
-      }
-    }
-  }
-
-  @include e(footer) {
-    display: flex;
-    align-items: center;
-
-    @include m(item) {
-      flex: 1;
-      height: 55px;
-      line-height: 55px;
-      text-align: center;
-
-      .nut-icon {
-        display: inline-block;
-        vertical-align: middle;
-      }
-
-      .text {
-        display: inline-block;
-        margin-left: 5px;
-        vertical-align: middle;
-        font-size: $text-size-small;
-      }
-
-      .is-active {
-        color: $foil-base-color;
-      }
-    }
-  }
-}
-
 @include b(comment) {
   @include e(title) {
-    margin-top: 10px;
-    padding: 10px 16px;
-    font-weight: bold;
-    background: $white-color;
-    font-size: $text-size-medium;
+    padding-top: 10px;
+    background: $white-1-color;
+
+    @include m(text) {
+      padding: 10px 16px;
+      font-weight: bold;
+      background: $white-color;
+      font-size: $text-size-medium;
+    }
   }
 
   @include e(empty) {

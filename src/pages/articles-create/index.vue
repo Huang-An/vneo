@@ -96,5 +96,5 @@ const submitSuccess = (type: number) => {
 }
 
 // 设置标题
-useDidShow(() => !store.isCheck && setNavigationBarTitle({ title: '发布 ' }))
+useDidShow(() => !store.isCheck && setNavigationBarTitle({ title: '发布' }))
 </script>

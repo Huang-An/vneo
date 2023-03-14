@@ -98,5 +98,8 @@ const upload = async () => {
   }
 }
 
-defineExpose({ upload })
+// 检查图片是否已选
+const checkFileList = () => !!fileList.value.length
+
+defineExpose({ upload, checkFileList })
 </script>

@@ -3,7 +3,7 @@ const { createResponeBySuccess } = require('@vneo/cloud-utils')
 // 获取应用配置
 exports.config = async params => {
   // 审核版本，审核成功后，发版后 ++
-  const checkVersion = '1.0.7'
+  const checkVersion = '1.0.8'
 
   const config = {
     // 是否小程序审核

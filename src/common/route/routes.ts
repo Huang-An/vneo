@@ -86,6 +86,11 @@ export const routes = [
     title: '详情',
     name: 'articles-detail',
     path: 'pages/articles-detail/index'
+  },
+  {
+    title: '评论',
+    name: 'comment-create',
+    path: 'pages/comment-create/index'
   }
 ]
 

@@ -1,0 +1,15 @@
+@import '@/assets/styles/common/var.scss';
+@import '@/assets/styles/mixins/mixins.scss';
+
+@include b(comment-create) {
+  height: 100%;
+  position: relative;
+  background: $white-color;
+
+  @include e(submit) {
+    position: absolute;
+    bottom: 75px;
+    left: 15px;
+    right: 15px;
+  }
+}

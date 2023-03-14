@@ -1,5 +1,5 @@
 <template>
-  <div class="vneo-scroll" :style="{ height }">
+  <div class="vneo-scroll" :style="{ height, backgroundColor }">
     <scroll-view
       :scroll-y="true"
       :refresher-enabled="true"
@@ -11,7 +11,7 @@
     >
       <slot name="pre" />
 
-      <slot v-for="(item, index) in record" :key="item._id || index" :item="item" />
+      <slot v-for="(item, index) in record" :key="item[unique] || index" :item="item" :index="index" />
 
       <slot v-if="!record.length" name="empty">
         <vneo-empty :empty-text="emptyText" />
@@ -25,7 +25,7 @@
           <span>{{ loadingText }}</span>
         </div>
 
-        <span v-else class="vneo-scroll__lower--finished">{{ finishedText }}</span>
+        <span v-else class="vneo-scroll__lower--finished" @click="request(false)">{{ finishedText }}</span>
       </div>
     </scroll-view>
   </div>
@@ -64,7 +64,7 @@ const props = defineProps({
 
   finishedText: {
     type: String,
-    default: '—— 亲，没有更多啦 ——'
+    default: '暂无更多，点击刷新'
   },
 
   emptyText: {
@@ -73,6 +73,7 @@ const props = defineProps({
   },
 
   load: {
+    required: true,
     type: Function as PropType<Load>
   },
 
@@ -81,9 +82,18 @@ const props = defineProps({
     default: 'calc(100vh - 100rpx)'
   },
 
+  backgroundColor: {
+    type: String
+  },
+
   isRefreshByShow: {
     type: Boolean,
     default: false
+  },
+
+  unique: {
+    type: String,
+    default: '_id'
   }
 })
 
@@ -98,7 +108,7 @@ const isLoading = ref(false)
 // 是否下拉刷新中
 const isRefreshing = ref(false)
 // 是否已完成
-const isFinished = computed(() => record.value.length >= total.value)
+const isFinished = ref(false)
 // 是否禁止上拉加载
 const isDisabledLower = computed(() => isLoading.value || isFinished.value)
 // 是否禁止下拉刷新
@@ -124,6 +134,7 @@ const closeRefreshLoading = () => {
 // 开启 上拉 loading
 const startLoading = () => {
   isLoading.value = true
+  isFinished.value = false
 }
 
 // 关闭 上拉 loading
@@ -133,34 +144,25 @@ const closeLoading = () => {
 
 // 请求
 const request = async (isRefresh: boolean = false) => {
-  if (!props.load) {
-    return
-  }
-
   try {
     isRefresh ? startRefreshLoading() : startLoading()
 
     const { data } = await props.load(pageConfig.value)
 
-    pageConfig.value.pageIndex++
+    // 返回有数据 页数才加
+    data.items.length >= pageConfig.value.pageSize && pageConfig.value.pageIndex++
 
     total.value = data.total
 
     updateRecord(isRefresh ? 'reset' : 'concat', data.items)
+
+    isFinished.value = record.value.length >= total.value
   } finally {
-    setTimeout(() => (isRefresh ? closeRefreshLoading() : closeLoading()), 200)
+    isRefresh ? closeRefreshLoading() : closeLoading()
   }
 }
 
-const onLoad = async () => {
-  if (isDisabledLower.value) {
-    return
-  }
-
-  request()
-}
-
-// 下拉刷新触发
+// 下拉刷新
 const onRefresh = () => {
   if (isDisabledRefresh.value) {
     return
@@ -168,6 +170,15 @@ const onRefresh = () => {
 
   reset()
   request(true)
+}
+
+// 上拉加载
+const onLoad = async () => {
+  if (isDisabledLower.value) {
+    return
+  }
+
+  request()
 }
 
 // update record
@@ -180,7 +191,12 @@ const updateRecord = (type: 'concat' | 'reset' | 'remove', data: Item[]) => {
 
   // concat
   if (type === 'concat') {
-    record.value = record.value.concat(data as Item[])
+    data.forEach(item => {
+      const index = record.value.findIndex(r => r[props.unique] === item[props.unique])
+
+      index === -1 && record.value.push(item)
+    })
+
     return
   }
 
@@ -195,16 +211,8 @@ const updateRecord = (type: 'concat' | 'reset' | 'remove', data: Item[]) => {
   }
 }
 
-const start = () => {
-  if (props.isRefreshByShow) {
-    useDidShow(() => onRefresh())
-    return
-  }
-
-  onRefresh()
-}
-
-start()
+// 首次请求
+props.isRefreshByShow ? useDidShow(() => onRefresh()) : onRefresh()
 
 defineExpose({ updateRecord, onRefresh })
 </script>
