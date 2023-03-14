@@ -10,6 +10,7 @@
 
     <div class="vneo-articles-create__submit">
       <nut-checkbox
+        v-if="form.type === 1"
         v-model="form.isPrivate"
         icon-size="12"
         label="匿名发布"
@@ -64,6 +65,10 @@ const submit = async () => {
   if (!form.content) {
     fail('请填写内容~')
     return
+  }
+
+  if (form.type === 2) {
+    form.isPrivate = false
   }
 
   await uploaderRef.value.upload()

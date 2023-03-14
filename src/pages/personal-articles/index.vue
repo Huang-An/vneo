@@ -1,5 +1,5 @@
 <template>
-  <vneo-scroll ref="scrollRef" :load="load" is-refresh-by-show>
+  <vneo-scroll ref="scrollRef" :load="load" is-refresh-by-show height="100vh">
     <template #default="{ item }: { item: ArticlesList.ListItem }">
       <vneo-articles-card :data="item" @remove="remove(item)" />
     </template>
