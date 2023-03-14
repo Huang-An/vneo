@@ -23,7 +23,6 @@ import { message } from '@/common/toast'
 const appList = reactive([
   { name: '时间胶囊', icon: timeCapsule },
   { name: 'TODOLIST', icon: todoList },
-  { name: '跳蚤市场', icon: fleaMarket },
   { name: '情侣空间', icon: coupleSpace },
   { name: '俱乐部', icon: club }
 ])
