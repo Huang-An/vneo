@@ -53,8 +53,13 @@
     }
 
     @include m(content) {
-      font-size: $text-size-medium;
+      display: -webkit-box;
+      overflow: hidden;
       margin-bottom: 10px;
+      text-overflow: ellipsis;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      font-size: $text-size-medium;
     }
 
     @include m(images) {
