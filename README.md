@@ -4,7 +4,9 @@
 ## 启动
 
 1、 配置小程序APPID
+
 2、 配置云开发环境
+
 3、
 ```shell
 npm run serve:weapp
