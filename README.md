@@ -18,3 +18,12 @@ npm run serve:weapp
 ```shell
 npm run build:weapp
 ```
+
+
+## cloud
+
+云函数代码，使用 monorepo 组织代码。其中 utils 为个公用代码。
+
+### utils
+route ----> 让项目可以用路由形式组织云函数代码
+database ----> 常用数据库操作
