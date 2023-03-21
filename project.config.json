@@ -3,7 +3,6 @@
   "cloudfunctionRoot": "cloud/",
   "projectname": "vneo",
   "description": "vneo mini program client",
-  "appid": "wx04db78a20f923244",
   "setting": {
     "urlCheck": true,
     "es6": false,
